@@ -4,11 +4,12 @@ import 'package:intl/intl.dart';
 
 class HomeView extends StatelessWidget {
   Stream<DateTime> time$;
+  DateTime defaultTime;
 
-  final timeFormat = new DateFormat.jm();
-  final dateFormat = DateFormat('d, MMM');
+  final timeFormat = new DateFormat.jm(); // hm fr 24 hrs
+  final dateFormat = DateFormat('d MMMM');
 
-  HomeView({ this.time$ }): super();
+  HomeView({ this.time$, this.defaultTime }): super();
 
   @override
   Widget build(BuildContext ctx) {
@@ -18,7 +19,7 @@ class HomeView extends StatelessWidget {
           children: [
             StreamBuilder<DateTime>(
               stream: time$,
-              initialData: DateTime.now(),
+              initialData: defaultTime,
               builder: (BuildContext context, AsyncSnapshot<DateTime> snapshot) {
                 switch (snapshot.connectionState) {
                   case ConnectionState.active:
