@@ -1,4 +1,4 @@
-package com.example.owyn
+package io.github.phenax.owyn
 
 import io.flutter.embedding.android.FlutterActivity
 
