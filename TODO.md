@@ -7,6 +7,7 @@
 
 ## HomePage
   - [ ] Create statusbar
+  - [ ] Get rid of defaultTime and loading
   - [ ] Create favorites list
   - [ ] Get favorites list from a persistent store
 

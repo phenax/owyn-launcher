@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
           body: PageView(
               controller: PageController(),
               children: [
-                HomeView(time$: time$),
+                HomeView(time$, defaultTime: DateTime.now()),
                 AppsView(),
               ],
           ),
