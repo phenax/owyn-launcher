@@ -31,7 +31,7 @@ class Option extends StatelessWidget {
 
 class AppsView extends StatelessWidget {
   Future<List<Application>> appListF = DeviceApps.getInstalledApplications(
-      includeSystemApps: false,
+      includeSystemApps: true,
       onlyAppsWithLaunchIntent: true,
   );
 
