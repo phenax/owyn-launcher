@@ -2,6 +2,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../components/FixedContainer.dart';
+
 class StatusInfoCard extends StatelessWidget {
   Stream<DateTime> time$;
   DateTime defaultTime;
@@ -62,28 +64,14 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext ctx) {
-    return LayoutBuilder(
-        builder: (BuildContext context, BoxConstraints viewportConstraints) {
-          return SingleChildScrollView(
-            child: ConstrainedBox(
-              constraints: BoxConstraints(
-                minHeight: viewportConstraints.maxHeight,
-              ),
-              child: IntrinsicHeight(
-                child: Container(
-                    padding: const EdgeInsets.symmetric(vertical: 36.0, horizontal: 16.0),
-                    height: viewportConstraints.maxHeight,
-                    child: Column(
-                        children: [
-                          StatusInfoCard(time$, defaultTime: defaultTime),
-                          Expanded(child: Text('Content')),
-                        ],
-                    ),
-                )
-              ),
-            ),
-          );
-        }
+    return FixedContainer(
+        padding: const EdgeInsets.symmetric(vertical: 36.0, horizontal: 16.0),
+        child: Column(
+            children: [
+              StatusInfoCard(time$, defaultTime: defaultTime),
+              Expanded(child: Text('Content')),
+            ],
+        )
     );
   }
 }
