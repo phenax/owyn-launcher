@@ -12,9 +12,8 @@
   - [ ] Get favorites list from a persistent store
 
 ## Applications list
-  - [ ] Create app list
+  - [X] Create app list
   - [ ] Make app list searchable
-  - [ ] Create homepage
   - [ ] Create options menu on long press
   - [ ] Add "add to favorites" action
   - [ ] Add uninstall action
