@@ -20,15 +20,33 @@ class StatusInfoCard extends StatelessWidget {
           Widget child = Text('Loading...', key: Key('loading'));
 
           if (snapshot.hasData) {
-            child = Column(children: [
-              Text(timeFormat.format(snapshot.data), key: Key('time')),
-              Text(dateFormat.format(snapshot.data), key: Key('date')),
-            ]);
+            child = Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(timeFormat.format(snapshot.data),
+                      key: Key('time'),
+                      textAlign: TextAlign.left,
+                      style: const TextStyle(
+                          fontSize: 32.0,
+                          fontWeight: FontWeight.bold,
+                      ),
+                  ),
+                  Text(dateFormat.format(snapshot.data),
+                      key: Key('date'),
+                      textAlign: TextAlign.left,
+                      style: const TextStyle(
+                          fontSize: 20.0,
+                      ),
+                  ),
+                ]
+            );
           }
 
           return Container(
             height: 300,
-            child: child,
+            padding: EdgeInsets.symmetric(vertical: 8.0),
+            child: Align(alignment: Alignment.topLeft, child: child),
           );
         },
     );

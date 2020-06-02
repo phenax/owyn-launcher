@@ -37,11 +37,10 @@ void main() {
     await tester.pumpWidget(wrapper(HomeView(time$)));
     await tester.pump();
 
+    await tester.pump(Duration(seconds: 2));
+
     var timeWidget = find.byKey(Key('time'));
     var dateWidget = find.byKey(Key('date'));
-
-    await waitFor(Duration(milliseconds: 50));
-    await tester.pump();
 
     expect(timeWidget, findsOneWidget);
     //for(var w in timeWidget.evaluate()) {
