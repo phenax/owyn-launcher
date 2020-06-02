@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
       title: 'owyn launcher',
       home: Scaffold(
           body: PageView(
-              controller: PageController(),
+              controller: PageController(keepPage: true),
               children: [
                 HomeView(time$, defaultTime: DateTime.now()),
                 AppsView(),

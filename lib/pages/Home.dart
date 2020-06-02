@@ -45,7 +45,7 @@ class StatusInfoCard extends StatelessWidget {
           }
 
           return Container(
-            height: 300,
+            height: 80,
             padding: EdgeInsets.symmetric(vertical: 8.0),
             child: Align(alignment: Alignment.topLeft, child: child),
           );
@@ -65,22 +65,22 @@ class HomeView extends StatelessWidget {
     return LayoutBuilder(
         builder: (BuildContext context, BoxConstraints viewportConstraints) {
           return SingleChildScrollView(
-           child: ConstrainedBox(
-             constraints: BoxConstraints(
-               minHeight: viewportConstraints.maxHeight,
-             ),
-             child: IntrinsicHeight(
-               child: Container(
-                   padding: const EdgeInsets.symmetric(vertical: 36.0, horizontal: 16.0),
-                   height: viewportConstraints.maxHeight,
-                   child: Column(
-                       children: [
-                         StatusInfoCard(time$, defaultTime: defaultTime),
-                         Expanded(child: Text('Content')),
-                       ],
-                   ),
-               )
-             ),
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                minHeight: viewportConstraints.maxHeight,
+              ),
+              child: IntrinsicHeight(
+                child: Container(
+                    padding: const EdgeInsets.symmetric(vertical: 36.0, horizontal: 16.0),
+                    height: viewportConstraints.maxHeight,
+                    child: Column(
+                        children: [
+                          StatusInfoCard(time$, defaultTime: defaultTime),
+                          Expanded(child: Text('Content')),
+                        ],
+                    ),
+                )
+              ),
             ),
           );
         }
