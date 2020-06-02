@@ -22,12 +22,11 @@ void main() {
     var dateWidget = find.byKey(Key('date'));
 
     expect(timeWidget, findsOneWidget);
-    expect(dateWidget, findsOneWidget);
-
     for(var w in timeWidget.evaluate()) {
       expect(w.widget.toString(), contains('10:25 AM'));
     }
 
+    expect(dateWidget, findsOneWidget);
     for(var w in dateWidget.evaluate()) {
       expect(w.widget.toString(), contains('7 March'));
     }
