@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 
 import 'pages/Home.dart';
@@ -8,17 +9,24 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
+  final Stream<DateTime> time$ = Stream.periodic(Duration(seconds: 1), (_x) => DateTime.now()).asBroadcastStream();
+
+  @override
+  void dispose() {
+    time$.drain();
+  }
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'owyn launcher',
       home: Scaffold(
           body: PageView(
-              controller: PageViewController(),
+              controller: PageController(),
               children: [
-                HomeView(),
-                AppView(),
+                HomeView(time$: time$),
+                AppsView(),
               ],
           ),
       ),

@@ -3,6 +3,7 @@
 ## Global
   - [ ] Start writing tests
   - [X] Transision between pages between pages
+  - [ ] Find a way to preload both pages and stop from "loading"
 
 ## HomePage
   - [ ] Create statusbar
