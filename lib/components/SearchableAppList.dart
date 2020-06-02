@@ -11,7 +11,12 @@ class _SearchableAppListState extends State<SearchableAppList> {
   }
 
   int _appSorter(Application a, Application b) {
-    return a.appName.compareTo(b.appName);
+    return a.appName.toLowerCase().compareTo(b.appName.toLowerCase());
+  }
+
+  bool _filterApp(Application a) {
+    return a.appName.toLowerCase().contains(_searchTerm.toLowerCase()) ||
+        a.packageName.toLowerCase().contains(_searchTerm.toLowerCase());
   }
 
   @override
@@ -19,11 +24,12 @@ class _SearchableAppListState extends State<SearchableAppList> {
     return Column(
         children: [
           Container(
-            height: 100,
+            height: 30,
             child: TextField(
+                onChanged: onInput,
                 decoration: InputDecoration(
                     border: InputBorder.none,
-                    hintText: 'Enter a search term',
+                    hintText: 'Search',
                 ),
             ),
           ),
@@ -34,9 +40,13 @@ class _SearchableAppListState extends State<SearchableAppList> {
                 return Text('Loading...');
               }
 
-              snap.data.sort(_appSorter);
+              List<Application> results = snap.data
+                  .where(_filterApp)
+                  .toList();
+              results.sort(_appSorter);
+
               return AppList(
-                  appList: snap.data,
+                  appList: results,
                   openApp: widget.openApp,
                   openOptionsMenu: widget.openOptionsMenu,
               );
