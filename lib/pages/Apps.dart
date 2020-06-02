@@ -4,6 +4,30 @@ import 'package:device_apps/device_apps.dart';
 import '../components/FixedContainer.dart';
 import '../components/SearchableAppList.dart';
 
+class Option extends StatelessWidget {
+  void Function() onTap;
+  Widget child;
+
+  Option({ this.child, this.onTap }): super();
+
+  @override
+  build(BuildContext ctx) {
+    return Column(
+      children: [
+        ListTile(
+            contentPadding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 16.0),
+            title: child,
+            onTap: () {
+              onTap();
+              Navigator.pop(ctx);
+            },
+        ),
+        Divider(height: 1.0),
+      ],
+    );
+  }
+}
+
 class AppsView extends StatelessWidget {
   Future<List<Application>> appListF = DeviceApps.getInstalledApplications(
       includeSystemApps: false,
@@ -14,8 +38,29 @@ class AppsView extends StatelessWidget {
     DeviceApps.openApp(app.packageName);
   }
 
-  void openOptionsMenu(Application app) {
-    debugPrint('Wow');
+  void openOptionsMenu(BuildContext ctx, Application app) {
+    showDialog(context: ctx, builder: (BuildContext ctx) => buildOptionsMenu(ctx, app));
+  }
+
+  Widget buildOptionsMenu(BuildContext ctx, Application app) {
+    return Dialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12.0),
+      ),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20.0),
+        ),
+        height: 300.0,
+        width: 300.0,
+        child: ListView(
+          children: [
+            Option(child: Text('Cool'), onTap: () { debugPrint('Cool'); }),
+            Option(child: Text('Wow'),  onTap: () { debugPrint('Wow'); }),
+          ],
+        ),
+      ),
+    );
   }
 
   @override
@@ -25,7 +70,7 @@ class AppsView extends StatelessWidget {
         child: SearchableAppList(
             appListF: appListF,
             openApp: openApp,
-            openOptionsMenu: openOptionsMenu,
+            openOptionsMenu: (app) => openOptionsMenu(ctx, app),
         ),
     );
   }

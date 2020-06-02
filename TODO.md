@@ -4,6 +4,8 @@
   - [X] Start writing tests
   - [X] Transision between pages between pages
   - [X] Find a way to preload both pages and stop from "loading"
+  - [ ] Figure out the importance of keys and add them as required
+  - [ ] Dark/List themes
 
 ## HomePage
   - [X] Create statusbar
