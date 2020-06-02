@@ -4,6 +4,8 @@ import 'package:owyn/pages/Home.dart';
 import 'package:owyn/pages/Apps.dart';
 
 void main() {
+  // TODO: Uncomment once this is released -> https://github.com/flutter/flutter/pull/57287
+
   //testWidgets('Should render with no errors', (WidgetTester tester) async {
     //await tester.pumpWidget(MyApp());
     //await tester.pump();
