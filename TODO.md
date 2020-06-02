@@ -16,9 +16,10 @@
 ## Applications list
   - [X] Create app list
   - [X] Make app list searchable
-  - [ ] Create options menu on long press
+  - [X] Create options menu on long press
   - [ ] Add "add to favorites" action
-  - [ ] Add uninstall action
-  - [ ] Add goto app settings action
+  - [X] Add uninstall action
+  - [X] Add goto app settings action
+  - [ ] Fix uninstall action issue
   - [ ] Make app list load faster
   - [ ] Make keyboard close on swipe

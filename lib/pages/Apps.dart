@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:device_apps/device_apps.dart';
+import 'package:android_intent/android_intent.dart';
 
 import '../components/FixedContainer.dart';
 import '../components/SearchableAppList.dart';
@@ -55,8 +56,19 @@ class AppsView extends StatelessWidget {
         width: 300.0,
         child: ListView(
           children: [
-            Option(child: Text('Cool'), onTap: () { debugPrint('Cool'); }),
-            Option(child: Text('Wow'),  onTap: () { debugPrint('Wow'); }),
+            Option(child: Text('App Settings'), onTap: () async {
+              await AndroidIntent(
+                  action: 'action_application_details_settings',
+                  data: 'package:${app.packageName}',
+              ).launch();
+            }),
+            Option(child: Text('Uninstall'),  onTap: () async {
+              // FIXME: Doesn't work
+              await AndroidIntent(
+                  action: 'action_delete',
+                  data: 'package:${app.packageName}',
+              ).launch();
+            }),
           ],
         ),
       ),
