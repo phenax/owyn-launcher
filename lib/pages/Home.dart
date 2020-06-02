@@ -8,9 +8,9 @@ class StatusInfoCard extends StatelessWidget {
 
   StatusInfoCard(this.time$, { this.defaultTime }): super();
 
-  final timeFormat = new DateFormat.jm(); // hm fr 24 hrs
-  final dateFormat = DateFormat('d MMMM');
-  
+  final timeFormat = DateFormat('h:m a'); // H fr 24 hrs
+  final dateFormat = DateFormat('EEEE, d MMM');
+
   @override
   Widget build(BuildContext ctx) {
     return StreamBuilder<DateTime>(
@@ -36,7 +36,8 @@ class StatusInfoCard extends StatelessWidget {
                       key: Key('date'),
                       textAlign: TextAlign.left,
                       style: const TextStyle(
-                          fontSize: 20.0,
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.w300,
                       ),
                   ),
                 ]
