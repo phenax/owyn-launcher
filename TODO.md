@@ -1,13 +1,13 @@
 # TODO
 
 ## Global
-  - [ ] Start writing tests
+  - [X] Start writing tests
   - [X] Transision between pages between pages
-  - [ ] Find a way to preload both pages and stop from "loading"
+  - [X] Find a way to preload both pages and stop from "loading"
 
 ## HomePage
-  - [ ] Create statusbar
-  - [ ] Get rid of defaultTime and loading
+  - [X] Create statusbar
+  - [X] Get rid of defaultTime and loading
   - [ ] Create favorites list
   - [ ] Get favorites list from a persistent store
 
