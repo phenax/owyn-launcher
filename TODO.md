@@ -9,7 +9,7 @@
 ## Issues
   - [ ] Fix scroll/fling conflict (snap)
   - [ ] Fix uninstall action issue
-  - [ ] Fix build issue
+  - [X] Fix build issue
 
 ## HomePage
   - [X] Create statusbar
@@ -24,6 +24,7 @@
   - [X] Add uninstall action
   - [X] Add goto app settings action
   - [X] Add "add to favorites" action
+  - [ ] Use getStringList for favorites list you dipshit
   - [ ] Sort the list according to frequently used
   - [ ] Make app list load faster
   - [ ] Make keyboard close on swipe
