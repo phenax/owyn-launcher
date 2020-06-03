@@ -15,10 +15,6 @@ void main() {
 }
 
 class MyAppState extends StreamState<MyApp> {
-  // Streams
-  final Stream<DateTime> time$ =
-      Stream.periodic(Duration(seconds: 1), (_x) => DateTime.now()).asBroadcastStream();
-
   // State
   final config = StreamStateValue<Config>(
       stream$: getConfig$(),
@@ -28,18 +24,16 @@ class MyAppState extends StreamState<MyApp> {
       stream$: getFavorites$(),
       value: [],
   );
+  final dateTime = StreamStateValue<DateTime>(
+      stream$: Stream.periodic(Duration(seconds: 1), (_x) => DateTime.now()).asBroadcastStream(),
+      value: DateTime.now(),
+  );
   void initState() {
     super.initState();
     initStateValue(config);
     initConfig();
     initStateValue(favoriteApps);
     initFavorites();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    time$.drain();
   }
 
   ThemeData getLightTheme() {
@@ -84,8 +78,7 @@ class MyAppState extends StreamState<MyApp> {
               controller: PageController(keepPage: true),
               children: [
                 HomeView(
-                    time$: time$,
-                    defaultTime: DateTime.now(),
+                    dateTime: dateTime.value,
                     favoriteApps: favoriteApps.value,
                 ),
                 AppsView(),

@@ -8,10 +8,9 @@ import '../components/FixedContainer.dart';
 import '../data/config.dart';
 
 class StatusInfoCard extends StatelessWidget {
-  Stream<DateTime> time$;
-  DateTime defaultTime;
+  DateTime dateTime;
 
-  StatusInfoCard(this.time$, { this.defaultTime }): super();
+  StatusInfoCard({ this.dateTime }): super();
 
   final timeFormat = DateFormat('h:mm a'); // H fr 24 hrs
   final dateFormat = DateFormat('EEEE, d MMM');
@@ -20,14 +19,12 @@ class StatusInfoCard extends StatelessWidget {
   Widget build(BuildContext ctx) {
     ThemeData theme = Theme.of(ctx);
 
-    return StreamBuilder<DateTime>(
-        stream: time$,
-        initialData: defaultTime,
-        builder: (BuildContext context, AsyncSnapshot<DateTime> snapshot) {
-          Widget child = Text('Loading...', key: Key('loading'));
-
-          if (snapshot.hasData) {
-            child = Row(
+    return Container(
+        height: 100,
+        padding: EdgeInsets.symmetric(vertical: 8.0),
+        child: Align(
+            alignment: Alignment.topLeft,
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -35,7 +32,7 @@ class StatusInfoCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(timeFormat.format(snapshot.data),
+                      Text(timeFormat.format(dateTime),
                           key: Key('time'),
                           textAlign: TextAlign.left,
                           style: const TextStyle(
@@ -43,7 +40,7 @@ class StatusInfoCard extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                           ),
                       ),
-                      Text(dateFormat.format(snapshot.data),
+                      Text(dateFormat.format(dateTime),
                           key: Key('date'),
                           textAlign: TextAlign.left,
                           style: const TextStyle(
@@ -71,25 +68,17 @@ class StatusInfoCard extends StatelessWidget {
                     ),
                 ),
               ],
-            );
-          }
-
-          return Container(
-            height: 100,
-            padding: EdgeInsets.symmetric(vertical: 8.0),
-            child: Align(alignment: Alignment.topLeft, child: child),
-          );
-        },
+            ),
+        ),
     );
   }
 }
 
 class HomeView extends StatelessWidget {
-  Stream<DateTime> time$;
-  DateTime defaultTime;
+  DateTime dateTime;
   List<Application> favoriteApps;
 
-  HomeView({ this.time$, this.defaultTime, this.favoriteApps }): super();
+  HomeView({ this.dateTime, this.favoriteApps }): super();
 
   void noop(Application app) {}
 
@@ -99,7 +88,7 @@ class HomeView extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 36.0, horizontal: 16.0),
         child: Column(
             children: [
-              StatusInfoCard(time$, defaultTime: defaultTime),
+              StatusInfoCard(dateTime: dateTime),
               Expanded(child: Container(
                 child: AppList(appList: favoriteApps, openApp: noop, openOptionsMenu: noop),
               )),
