@@ -34,6 +34,7 @@ class MyAppState extends StreamState<MyApp> {
     initConfig();
     initStateValue(favoriteApps);
     initFavorites();
+    initStateValue(dateTime);
   }
 
   ThemeData getLightTheme() {
