@@ -5,6 +5,8 @@ import 'package:android_intent/android_intent.dart';
 import '../components/FixedContainer.dart';
 import '../components/SearchableAppList.dart';
 
+import '../data/favorites.dart';
+
 class Option extends StatelessWidget {
   void Function() onTap;
   Widget child;
@@ -44,18 +46,19 @@ class AppsView extends StatelessWidget {
   }
 
   Widget buildOptionsMenu(BuildContext ctx, Application app) {
+    ThemeData theme = Theme.of(ctx);
+
     return Dialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12.0),
-      ),
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20.0),
+          color: theme.backgroundColor,
         ),
-        height: 300.0,
-        width: 300.0,
+        height: 170.0,
         child: ListView(
           children: [
+            Option(child: Text('Add to favorites'), onTap: () async {
+              await addToFavorites(app);
+            }),
             Option(child: Text('App Settings'), onTap: () async {
               await AndroidIntent(
                   action: 'action_application_details_settings',

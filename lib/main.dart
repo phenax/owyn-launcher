@@ -36,7 +36,7 @@ class MyAppState extends StreamState<MyApp> {
   ThemeData getDarkTheme() {
     Color fg = Color(0xFFD8DEE9);
     return ThemeData(
-          backgroundColor: Color(0xFF0F1215),
+          backgroundColor: Color(0xFF1F2225),
           scaffoldBackgroundColor: Color(0xFF0F1215),
           accentColor: fg,
           primaryColor: Color(0xFF5E81AC),
