@@ -21,6 +21,8 @@ class _SearchableAppListState extends State<SearchableAppList> {
 
   @override
   Widget build(BuildContext ctx) {
+    ThemeData theme = Theme.of(context);
+
     return Column(
         children: [
           Container(
@@ -28,7 +30,9 @@ class _SearchableAppListState extends State<SearchableAppList> {
             child: TextField(
                 onChanged: onInput,
                 decoration: InputDecoration(
-                    border: InputBorder.none,
+                    prefixStyle: TextStyle(color: Color(0xFF888888)),
+                    prefix: Text('/'),
+                    hintStyle: TextStyle(color: Color(0xFFD8DEE9)),
                     hintText: 'Search',
                 ),
             ),

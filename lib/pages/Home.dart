@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../components/FixedContainer.dart';
+import '../data/config.dart';
 
 class StatusInfoCard extends StatelessWidget {
   Stream<DateTime> time$;
@@ -10,7 +11,7 @@ class StatusInfoCard extends StatelessWidget {
 
   StatusInfoCard(this.time$, { this.defaultTime }): super();
 
-  final timeFormat = DateFormat('h:m a'); // H fr 24 hrs
+  final timeFormat = DateFormat('h:mm a'); // H fr 24 hrs
   final dateFormat = DateFormat('EEEE, d MMM');
 
   @override
@@ -42,12 +43,16 @@ class StatusInfoCard extends StatelessWidget {
                           fontWeight: FontWeight.w300,
                       ),
                   ),
+                  FlatButton(
+                    child: Text('Theme'),
+                    onPressed: () { toggleTheme(); }
+                  ),
                 ]
             );
           }
 
           return Container(
-            height: 80,
+            height: 300,
             padding: EdgeInsets.symmetric(vertical: 8.0),
             child: Align(alignment: Alignment.topLeft, child: child),
           );

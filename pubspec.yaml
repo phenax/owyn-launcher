@@ -26,6 +26,7 @@ dependencies:
   intl: ^0.16.1
   device_apps: ^1.0.9
   android_intent: ^0.3.7
+  shared_preferences: ^0.4.3
 
 dev_dependencies:
   flutter_test:
