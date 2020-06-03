@@ -8,7 +8,7 @@ const String SEPERATOR = ',';
 StreamController<List<Application>> favorites_$ = StreamController<List<Application>>.broadcast();
 
 Future<Application> getApplication(String pkg) async {
-  if (pkg.length == 0) return null;
+  if (pkg == null || pkg.length == 0) return null;
   try {
     return DeviceApps.getApp(pkg);
   } catch(e) {
@@ -49,7 +49,7 @@ void setFavorites(List<Application> favs) async {
 }
 
 void addToFavorites(Application app) async {
-  List<Application> fs = await getFavorites();
+  List<Application> fs = await getFavorites() as List<Application>;
   
   var matching = fs.where((a) => a.packageName == app.packageName);
   if(matching.length == 0) {

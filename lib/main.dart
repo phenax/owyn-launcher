@@ -34,11 +34,6 @@ class MyAppState extends StreamState<MyApp> {
     initConfig();
     initStateValue(favoriteApps);
     initFavorites();
-
-    SharedPreferences.getInstance().then((instance) {
-      var val = instance.getString('favorites');
-      debugPrint('Hello |${val}| ${val.length}');
-    });
   }
 
   @override
