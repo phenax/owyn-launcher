@@ -77,10 +77,10 @@ class StatusInfoCard extends StatelessWidget {
 class HomeView extends StatelessWidget {
   DateTime dateTime;
   List<Application> favoriteApps;
+  void Function(Application) openApp;
+  void Function(BuildContext, Application) openOptionsMenu;
 
-  HomeView({ this.dateTime, this.favoriteApps }): super();
-
-  void noop(Application app) {}
+  HomeView({ this.dateTime, this.favoriteApps, this.openApp, this.openOptionsMenu }): super();
 
   @override
   Widget build(BuildContext ctx) {
@@ -90,7 +90,11 @@ class HomeView extends StatelessWidget {
             children: [
               StatusInfoCard(dateTime: dateTime),
               Expanded(child: Container(
-                child: AppList(appList: favoriteApps, openApp: noop, openOptionsMenu: noop),
+                child: AppList(
+                    appList: favoriteApps,
+                    openApp: openApp,
+                    openOptionsMenu: (app) => openOptionsMenu(ctx, app),
+                ),
               )),
             ],
         )

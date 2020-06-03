@@ -59,3 +59,11 @@ void addToFavorites(Application app) async {
   await setFavorites(fs);
 }
 
+void removeFromFavorites(Application app) async {
+  List<Application> fs = await getFavorites() as List<Application>;
+  
+  fs.removeWhere((a) => a.packageName == app.packageName);
+
+  await setFavorites(fs);
+}
+
