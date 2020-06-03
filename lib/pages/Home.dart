@@ -16,6 +16,8 @@ class StatusInfoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext ctx) {
+    ThemeData theme = Theme.of(ctx);
+
     return StreamBuilder<DateTime>(
         stream: time$,
         initialData: defaultTime,
@@ -23,36 +25,55 @@ class StatusInfoCard extends StatelessWidget {
           Widget child = Text('Loading...', key: Key('loading'));
 
           if (snapshot.hasData) {
-            child = Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(timeFormat.format(snapshot.data),
-                      key: Key('time'),
-                      textAlign: TextAlign.left,
-                      style: const TextStyle(
-                          fontSize: 32.0,
-                          fontWeight: FontWeight.bold,
+            child = Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(timeFormat.format(snapshot.data),
+                          key: Key('time'),
+                          textAlign: TextAlign.left,
+                          style: const TextStyle(
+                              fontSize: 32.0,
+                              fontWeight: FontWeight.bold,
+                          ),
                       ),
-                  ),
-                  Text(dateFormat.format(snapshot.data),
-                      key: Key('date'),
-                      textAlign: TextAlign.left,
-                      style: const TextStyle(
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.w300,
+                      Text(dateFormat.format(snapshot.data),
+                          key: Key('date'),
+                          textAlign: TextAlign.left,
+                          style: const TextStyle(
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.w300,
+                          ),
                       ),
-                  ),
-                  FlatButton(
-                    child: Text('Theme'),
-                    onPressed: () { toggleTheme(); }
-                  ),
-                ]
+                    ]
+                )),
+                Container(
+                    width: 40,
+                    height: 30,
+                    child: IconButton(
+                        padding: const EdgeInsets.all(0.0),
+                        visualDensity: const VisualDensity(vertical: 0.0, horizontal: 0.0),
+                        icon: Icon(
+                            Icons.brightness_4,
+                            color: theme.primaryColor,
+                            size: 16.0,
+                            semanticLabel: 'Toggle dark mode',
+                        ),
+                        tooltip: 'Toggle dark mode',
+                        enableFeedback: true,
+                        onPressed: () { toggleTheme(); }
+                    ),
+                ),
+              ],
             );
           }
 
           return Container(
-            height: 300,
+            height: 100,
             padding: EdgeInsets.symmetric(vertical: 8.0),
             child: Align(alignment: Alignment.topLeft, child: child),
           );

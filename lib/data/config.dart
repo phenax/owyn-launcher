@@ -8,7 +8,7 @@ class Config {
   Config({ this.theme }) {}
 
   bool isDarkMode() {
-    return theme == 'dark';
+    return theme != 'light';
   }
 }
 

@@ -13,10 +13,11 @@ void main() {
 
 class MyAppState extends StreamState<MyApp> {
   // Streams
-  StreamStateValue<Config> config = StreamStateValue<Config>(stream$: getConfig$(), value: Config());
   final Stream<DateTime> time$ =
       Stream.periodic(Duration(seconds: 1), (_x) => DateTime.now()).asBroadcastStream();
 
+  // State
+  StreamStateValue<Config> config = StreamStateValue<Config>(stream$: getConfig$(), value: Config());
   void initState() {
     super.initState();
     initStateValue(config);
