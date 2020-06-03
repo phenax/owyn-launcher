@@ -16,8 +16,8 @@
   - [X] Get rid of defaultTime and loading
   - [X] Create favorites list
   - [X] Get favorites list from a persistent store
-  - [ ] Add actions to favorite items
-  - [ ] Remove from favorites
+  - [X] Add actions to favorite items
+  - [X] Remove from favorites
   - [ ] Change the order of favorites?
 
 ## Applications list
