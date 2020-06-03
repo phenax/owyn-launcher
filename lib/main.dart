@@ -1,11 +1,14 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:device_apps/device_apps.dart';
 
 import 'pages/Home.dart';
 import 'pages/Apps.dart';
 
 import 'data/config.dart';
+import 'data/favorites.dart';
 import 'helpers/StreamState.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   runApp(MyApp());
@@ -17,10 +20,25 @@ class MyAppState extends StreamState<MyApp> {
       Stream.periodic(Duration(seconds: 1), (_x) => DateTime.now()).asBroadcastStream();
 
   // State
-  StreamStateValue<Config> config = StreamStateValue<Config>(stream$: getConfig$(), value: Config());
+  final config = StreamStateValue<Config>(
+      stream$: getConfig$(),
+      value: Config(),
+  );
+  final favoriteApps = StreamStateValue<List<Application>>(
+      stream$: getFavorites$(),
+      value: [],
+  );
   void initState() {
     super.initState();
     initStateValue(config);
+    initConfig();
+    initStateValue(favoriteApps);
+    initFavorites();
+
+    SharedPreferences.getInstance().then((instance) {
+      var val = instance.getString('favorites');
+      debugPrint('Hello |${val}| ${val.length}');
+    });
   }
 
   @override
@@ -70,7 +88,11 @@ class MyAppState extends StreamState<MyApp> {
           body: PageView(
               controller: PageController(keepPage: true),
               children: [
-                HomeView(time$, defaultTime: DateTime.now()),
+                HomeView(
+                    time$: time$,
+                    defaultTime: DateTime.now(),
+                    favoriteApps: favoriteApps.value,
+                ),
                 AppsView(),
               ],
           ),

@@ -7,13 +7,26 @@ const String SEPERATOR = ',';
 
 StreamController<List<Application>> favorites_$ = StreamController<List<Application>>.broadcast();
 
+Future<Application> getApplication(String pkg) async {
+  if (pkg.length == 0) return null;
+  try {
+    return DeviceApps.getApp(pkg);
+  } catch(e) {
+    return null;
+  }
+}
+
 Future<List<Application>> getFavorites() async {
   final prefs = await SharedPreferences.getInstance();
 
   String rawFavoritesList = prefs.getString(FAVORITES);
   List<String> packageNames = rawFavoritesList?.split(SEPERATOR) ?? <String>[];
 
-  return Future.wait(packageNames.map((String pkg) => DeviceApps.getApp(pkg)));
+  Iterable<Future<Application>> futures = packageNames.map(getApplication);
+
+  List<Application> result = await Future.wait(futures);
+
+  return result.where((a) => a != null).toList();
 }
 
 void initFavorites() async {
@@ -28,7 +41,7 @@ Stream<List<Application>> getFavorites$() {
 void setFavorites(List<Application> favs) async {
   final prefs = await SharedPreferences.getInstance();
 
-  String rawFavoritesList = favs.map((Application app) => app.packageName).join(SEPERATOR);
+  String rawFavoritesList = favs.map((Application app) => app.packageName).toList().join(SEPERATOR);
   
   prefs.setString(FAVORITES, rawFavoritesList);
 
@@ -37,7 +50,12 @@ void setFavorites(List<Application> favs) async {
 
 void addToFavorites(Application app) async {
   List<Application> fs = await getFavorites();
-  fs.add(app);
+  
+  var matching = fs.where((a) => a.packageName == app.packageName);
+  if(matching.length == 0) {
+    fs.add(app);
+  }
+
   await setFavorites(fs);
 }
 

@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:device_apps/device_apps.dart';
 
+import '../components/AppList.dart';
 import '../components/FixedContainer.dart';
 import '../data/config.dart';
 
@@ -85,8 +87,11 @@ class StatusInfoCard extends StatelessWidget {
 class HomeView extends StatelessWidget {
   Stream<DateTime> time$;
   DateTime defaultTime;
+  List<Application> favoriteApps;
 
-  HomeView(this.time$, { this.defaultTime }): super();
+  HomeView({ this.time$, this.defaultTime, this.favoriteApps }): super();
+
+  void noop(Application app) {}
 
   @override
   Widget build(BuildContext ctx) {
@@ -95,7 +100,9 @@ class HomeView extends StatelessWidget {
         child: Column(
             children: [
               StatusInfoCard(time$, defaultTime: defaultTime),
-              Expanded(child: Text('Content')),
+              Expanded(child: Container(
+                child: AppList(appList: favoriteApps, openApp: noop, openOptionsMenu: noop),
+              )),
             ],
         )
     );
