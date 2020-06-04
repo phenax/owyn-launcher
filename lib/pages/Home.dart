@@ -53,19 +53,20 @@ class StatusInfoCard extends StatelessWidget {
                 Container(
                     width: 40,
                     height: 30,
-                    child: IconButton(
-                        padding: const EdgeInsets.all(0.0),
-                        visualDensity: const VisualDensity(vertical: 0.0, horizontal: 0.0),
-                        icon: Icon(
-                            Icons.brightness_4,
-                            color: theme.primaryColor,
-                            size: 16.0,
-                            semanticLabel: 'Toggle dark mode',
-                        ),
-                        tooltip: 'Toggle dark mode',
-                        enableFeedback: true,
-                        onPressed: () { toggleTheme(); }
-                    ),
+                    child: Text(''),
+                    //child: IconButton(
+                        //padding: const EdgeInsets.all(0.0),
+                        //visualDensity: const VisualDensity(vertical: 0.0, horizontal: 0.0),
+                        //icon: Icon(
+                            //Icons.brightness_4,
+                            //color: theme.primaryColor,
+                            //size: 16.0,
+                            //semanticLabel: 'Toggle dark mode',
+                        //),
+                        //tooltip: 'Toggle dark mode',
+                        //enableFeedback: true,
+                        //onPressed: () { toggleTheme(); }
+                    //),
                 ),
               ],
             ),

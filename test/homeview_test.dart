@@ -16,8 +16,14 @@ void main() {
     makeApp('Youtube', 'org.example.youtube'),
   ];
 
-  testWidgets('Should render with no errors', (WidgetTester tester) async {
+  testWidgets('Should render with no errors with 0 favorite items', (WidgetTester tester) async {
     await tester.pumpWidget(wrapper(HomeView(dateTime: time, favoriteApps: <Application>[])));
+    await tester.pump();
+  });
+
+  testWidgets('Should render with no errors with some favorite items', (WidgetTester tester) async {
+    await tester.pumpWidget(wrapper(HomeView(dateTime: time, favoriteApps: favoriteApps)));
+    await tester.pump();
   });
 
   testWidgets('Should show formatted date correctly', (WidgetTester tester) async {

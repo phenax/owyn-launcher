@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:device_apps/device_apps.dart';
 
 Widget wrapper(Widget view) {
   return MaterialApp(

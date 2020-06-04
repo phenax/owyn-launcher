@@ -2,6 +2,7 @@
 
 ## Global
   - [ ] Add icons in context menu
+  - [ ] Some good docs with a gif of ui
   - [X] Start writing tests
   - [X] Transision between pages between pages
   - [X] Find a way to preload both pages and stop from "loading"
