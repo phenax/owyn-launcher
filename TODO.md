@@ -29,7 +29,7 @@
   - [X] Add uninstall action
   - [X] Add goto app settings action
   - [X] Add "add to favorites" action
-  - [ ] Use getStringList for favorites list you dipshit
+  - [X] Use getStringList for favorites list
   - [ ] Sort the list according to frequently used
   - [ ] Make app list load faster
   - [ ] Make keyboard close on swipe
