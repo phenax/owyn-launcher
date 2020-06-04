@@ -15,6 +15,7 @@ class AppsView extends StatelessWidget {
   Future<List<Application>> appListF = DeviceApps.getInstalledApplications(
       includeSystemApps: true,
       onlyAppsWithLaunchIntent: true,
+      includeAppIcons: false,
   );
 
   @override

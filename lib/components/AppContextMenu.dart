@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:device_apps/device_apps.dart';
 import 'package:android_intent/android_intent.dart';
+import 'package:android_intent/flag.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../data/favorites.dart';
@@ -57,9 +58,8 @@ class AppContextMenu extends StatelessWidget {
               ).launch();
             }),
             Option(child: Text('Uninstall'),  onTap: () async {
-              // FIXME: Doesn't work
               await AndroidIntent(
-                  action: 'action_delete',
+                  action: 'android.intent.action.DELETE',
                   data: 'package:${app.packageName}',
               ).launch();
             }),
