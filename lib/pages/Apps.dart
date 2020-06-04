@@ -6,30 +6,6 @@ import '../components/SearchableAppList.dart';
 
 import '../data/favorites.dart';
 
-class Option extends StatelessWidget {
-  void Function() onTap;
-  Widget child;
-
-  Option({ this.child, this.onTap }): super();
-
-  @override
-  build(BuildContext ctx) {
-    return Column(
-      children: [
-        ListTile(
-            contentPadding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 16.0),
-            title: child,
-            onTap: () {
-              onTap();
-              Navigator.pop(ctx);
-            },
-        ),
-        Divider(height: 1.0),
-      ],
-    );
-  }
-}
-
 class AppsView extends StatelessWidget {
   void Function(Application) openApp;
   void Function(BuildContext, Application) openOptionsMenu;
