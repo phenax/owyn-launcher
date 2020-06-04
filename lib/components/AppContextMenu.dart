@@ -8,9 +8,10 @@ import '../data/favorites.dart';
 
 class Option extends StatelessWidget {
   void Function() onTap;
+  Widget icon;
   Widget child;
 
-  Option({ this.child, this.onTap }): super();
+  Option({ this.child, this.icon, this.onTap }): super();
 
   @override
   build(BuildContext ctx) {
@@ -18,7 +19,10 @@ class Option extends StatelessWidget {
       children: [
         ListTile(
             contentPadding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 16.0),
-            title: child,
+            title: Row(children: [
+              Container(width: 36.0, padding: EdgeInsets.only(right: 16.0), child: icon),
+              child,
+            ]),
             onTap: () {
               onTap();
               Navigator.pop(ctx);
@@ -48,21 +52,33 @@ class AppContextMenu extends StatelessWidget {
         height: 170.0,
         child: ListView(
           children: [
-            Option(child: Text(isFavorite ? 'Remove from favorites' : 'Add to favorites'), onTap: () async {
-              await isFavorite ? removeFromFavorites(app) : addToFavorites(app);
-            }),
-            Option(child: Text('App Settings'), onTap: () async {
-              await AndroidIntent(
-                  action: 'action_application_details_settings',
-                  data: 'package:${app.packageName}',
-              ).launch();
-            }),
-            Option(child: Text('Uninstall'),  onTap: () async {
-              await AndroidIntent(
-                  action: 'android.intent.action.DELETE',
-                  data: 'package:${app.packageName}',
-              ).launch();
-            }),
+            Option(
+                icon: Icon(Icons.star, size: 22.0, color: theme.primaryColor),
+                child: Text(isFavorite ? 'Remove from favorites' : 'Add to favorites'),
+                onTap: () async {
+                  await isFavorite ? removeFromFavorites(app) : addToFavorites(app);
+                },
+            ),
+            Option(
+                child: Text('App Settings'),
+                icon: Icon(Icons.settings, size: 22.0, color: theme.primaryColor),
+                onTap: () async {
+                  await AndroidIntent(
+                      action: 'action_application_details_settings',
+                      data: 'package:${app.packageName}',
+                  ).launch();
+                },
+            ),
+            Option(
+                child: Text('Uninstall'),
+                icon: Icon(Icons.delete_forever, size: 22.0, color: theme.primaryColor),
+                onTap: () async {
+                  await AndroidIntent(
+                      action: 'android.intent.action.DELETE',
+                      data: 'package:${app.packageName}',
+                  ).launch();
+                },
+            ),
           ],
         ),
       ),
