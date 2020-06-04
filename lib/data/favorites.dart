@@ -26,7 +26,7 @@ Future<List<Application>> getFavorites() async {
   return result.where((a) => a != null).map((a) => a as Application).toList() as List<Application>;
 }
 
-void initFavorites() async {
+void refreshFavorites() async {
   List<Application> fs = await getFavorites();
   favorites_$.add(fs);
 }

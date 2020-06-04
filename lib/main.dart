@@ -34,9 +34,9 @@ class MyAppState extends StreamState<MyApp> {
   void initState() {
     super.initState();
     initStateValue(config);
-    initConfig();
+    refreshConfig();
     initStateValue(favoriteApps);
-    initFavorites();
+    refreshFavorites();
     initStateValue(dateTime);
   }
 

@@ -22,7 +22,7 @@ Future<Config> getConfig() async {
   );
 }
 
-void initConfig() async {
+void refreshConfig() async {
   Config c = await getConfig();
   config_$.add(c);
 }

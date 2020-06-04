@@ -9,6 +9,7 @@
 
 ## Issues
   - [ ] Fix scroll/fling conflict (snap)
+  - [ ] Uninstall from favorites doesnt update list
   - [X] Make keyboard close on swipe
   - [X] Fix uninstall action issue
   - [X] Disable back button
