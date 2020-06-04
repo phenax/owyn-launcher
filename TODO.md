@@ -5,10 +5,12 @@
   - [X] Transision between pages between pages
   - [X] Find a way to preload both pages and stop from "loading"
   - [X] Dark/List themes
+  - [ ] Add icons in context menu
 
 ## Issues
-  - [ ] Fix scroll/fling conflict (snap)
   - [ ] Fix uninstall action issue
+  - [ ] Fix scroll/fling conflict (snap)
+  - [X] Disable back button
   - [X] Fix build issue
 
 ## HomePage

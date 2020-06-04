@@ -119,20 +119,23 @@ class MyAppState extends StreamState<MyApp> {
       darkTheme: getDarkTheme(),
       themeMode: config.value.isDarkMode() ? ThemeMode.dark : ThemeMode.light,
       home: Scaffold(
-          body: PageView(
-              controller: PageController(keepPage: true),
-              children: [
-                HomeView(
-                    dateTime: dateTime.value,
-                    favoriteApps: favoriteApps.value,
-                    openApp: openApp,
-                    openOptionsMenu: openOptionsMenu,
-                ),
-                AppsView(
-                    openApp: openApp,
-                    openOptionsMenu: openOptionsMenu,
-                ),
-              ],
+          body: WillPopScope(
+              onWillPop: () => Future.value(false),
+              child: PageView(
+                  controller: PageController(keepPage: true),
+                  children: [
+                    HomeView(
+                        dateTime: dateTime.value,
+                        favoriteApps: favoriteApps.value,
+                        openApp: openApp,
+                        openOptionsMenu: openOptionsMenu,
+                    ),
+                    AppsView(
+                        openApp: openApp,
+                        openOptionsMenu: openOptionsMenu,
+                    ),
+                  ],
+              ),
           ),
       ),
     );
