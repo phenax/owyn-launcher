@@ -9,6 +9,7 @@
 
 ## Issues
   - [ ] Fix scroll/fling conflict (snap)
+  - [X] Make keyboard close on swipe
   - [X] Fix uninstall action issue
   - [X] Disable back button
   - [X] Fix build issue
@@ -25,7 +26,6 @@
 ## Applications list
   - [ ] Sort the list according to frequently used
   - [ ] Make app list load faster
-  - [ ] Make keyboard close on swipe
   - [X] Create app list
   - [X] Make app list searchable
   - [X] Create options menu on long press

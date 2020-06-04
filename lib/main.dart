@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:device_apps/device_apps.dart';
 import 'package:android_intent/android_intent.dart';
+import 'package:flutter/services.dart';
 
 import 'pages/Home.dart';
 import 'pages/Apps.dart';
@@ -91,6 +92,9 @@ class MyAppState extends StreamState<MyApp> {
               onWillPop: () => Future.value(false),
               child: PageView(
                   controller: PageController(keepPage: true),
+                  onPageChanged: (_x) {
+                    SystemChannels.textInput.invokeMethod('TextInput.hide');
+                  },
                   children: [
                     HomeView(
                         dateTime: dateTime.value,

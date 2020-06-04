@@ -31,7 +31,6 @@ class _SearchableAppListState extends State<SearchableAppList> {
                 onChanged: onInput,
                 decoration: InputDecoration(
                     prefixStyle: TextStyle(color: Color(0xFF888888)),
-                    prefix: Text('/'),
                     hintStyle: TextStyle(color: Color(0xFFD8DEE9)),
                     hintText: 'Search',
                 ),
