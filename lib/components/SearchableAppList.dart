@@ -4,10 +4,22 @@ import 'package:device_apps/device_apps.dart';
 import 'AppList.dart';
 
 class _SearchableAppListState extends State<SearchableAppList> {
-  String _searchTerm = '';
+  final _inputController = TextEditingController();
 
-  void onInput(String str) {
-    setState(() { _searchTerm = str; });
+  void initState() {
+    super.initState();
+    _inputController.addListener(() {
+
+    });
+  }
+
+  void dispose() {
+    _inputController.dispose();
+    super.dispose();
+  }
+
+  void reset() {
+    _inputController.clear();
   }
 
   int _appSorter(Application a, Application b) {
@@ -15,8 +27,14 @@ class _SearchableAppListState extends State<SearchableAppList> {
   }
 
   bool _filterApp(Application a) {
-    return a.appName.toLowerCase().contains(_searchTerm.toLowerCase()) ||
-        a.packageName.toLowerCase().contains(_searchTerm.toLowerCase());
+    var searchTerm = _inputController.text;
+    return a.appName.toLowerCase().contains(searchTerm.toLowerCase()) ||
+        a.packageName.toLowerCase().contains(searchTerm.toLowerCase());
+  }
+
+  Widget getIcon(IconData icon, { Color color }) {
+    var inputIconSize = 16.0;
+    return Icon(icon, color: color, size: inputIconSize);
   }
 
   @override
@@ -27,13 +45,24 @@ class _SearchableAppListState extends State<SearchableAppList> {
         children: [
           Container(
             height: 30,
-            child: TextField(
-                onChanged: onInput,
-                decoration: InputDecoration(
-                    prefixStyle: TextStyle(color: Color(0xFF888888)),
-                    hintStyle: TextStyle(color: Color(0xFFD8DEE9)),
-                    hintText: 'Search',
-                ),
+            child: Align(
+                alignment: Alignment.topRight,
+                child: TextField(
+                    //onChanged: onInput,
+                    enableSuggestions: false,
+                    controller: _inputController,
+                    decoration: InputDecoration(
+                        contentPadding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
+                        //prefix: Container(padding: , child: Text('')),
+                        //prefixStyle: TextStyle(color: theme.primaryColor),
+                        hintStyle: TextStyle(color: Color(0x88D8DEE9)),
+                        hintText: 'Search',
+                        suffix: IconButton(
+                            icon: getIcon(Icons.close, color: Colors.red[400]),
+                            onPressed: reset,
+                        ),
+                    ),
+                )
             ),
           ),
           Expanded(child: FutureBuilder(
