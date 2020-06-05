@@ -1,5 +1,5 @@
 # owyn
-Owyn(Only What You Need) launcher is a minimal launcher for android
+Owyn (Only What You Need) launcher is a minimal launcher for android
 
 
 ## What I need from my launcher..
