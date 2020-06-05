@@ -7,6 +7,8 @@ import '../components/Option.dart';
 import '../components/AppList.dart';
 import '../components/FixedContainer.dart';
 import '../data/config.dart';
+import '../data/applications.dart';
+import '../data/favorites.dart';
 
 class StatusInfoCard extends StatelessWidget {
   DateTime dateTime;
@@ -45,7 +47,10 @@ class StatusInfoCard extends StatelessWidget {
                           semanticLabel: 'Refresh',
                       ),
                       child: Text('Refresh'),
-                      onTap: () {},
+                      onTap: () {
+                        refreshApplications();
+                        refreshFavorites();
+                      },
                   ),
                 ],
             ),
