@@ -9,21 +9,16 @@ import '../data/favorites.dart';
 class AppsView extends StatelessWidget {
   void Function(Application) openApp;
   void Function(BuildContext, Application) openOptionsMenu;
-  
-  AppsView({ this.openApp, this.openOptionsMenu }): super();
+  List<Application> appList;
 
-  Future<List<Application>> appListF = DeviceApps.getInstalledApplications(
-      includeSystemApps: true,
-      onlyAppsWithLaunchIntent: true,
-      includeAppIcons: false,
-  );
+  AppsView({ this.appList, this.openApp, this.openOptionsMenu }): super();
 
   @override
   Widget build(BuildContext ctx) {
     return FixedContainer(
         padding: const EdgeInsets.symmetric(vertical: 36.0, horizontal: 16.0),
         child: SearchableAppList(
-            appListF: appListF,
+            appList: appList,
             openApp: openApp,
             openOptionsMenu: (app) => openOptionsMenu(ctx, app),
         ),

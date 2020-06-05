@@ -11,6 +11,7 @@ import 'components/AppContextMenu.dart';
 
 import 'data/config.dart';
 import 'data/favorites.dart';
+import 'data/applications.dart';
 import 'helpers/StreamState.dart';
 
 void main() {
@@ -27,16 +28,26 @@ class MyAppState extends StreamState<MyApp> {
       stream$: getFavorites$(),
       value: [],
   );
+  final applications = StreamStateValue<List<Application>>(
+      stream$: getApplications$(),
+      value: [],
+  );
   final dateTime = StreamStateValue<DateTime>(
       stream$: Stream.periodic(Duration(seconds: 1), (_x) => DateTime.now()).asBroadcastStream(),
       value: DateTime.now(),
   );
   void initState() {
     super.initState();
+
     initStateValue(config);
     refreshConfig();
+    
     initStateValue(favoriteApps);
     refreshFavorites();
+
+    initStateValue(applications);
+    refreshApplications();
+
     initStateValue(dateTime);
   }
 
@@ -103,6 +114,7 @@ class MyAppState extends StreamState<MyApp> {
                         openOptionsMenu: openOptionsMenu,
                     ),
                     AppsView(
+                        appList: applications.value,
                         openApp: openApp,
                         openOptionsMenu: openOptionsMenu,
                     ),

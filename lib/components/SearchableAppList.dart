@@ -8,9 +8,6 @@ class _SearchableAppListState extends State<SearchableAppList> {
 
   void initState() {
     super.initState();
-    _inputController.addListener(() {
-
-    });
   }
 
   void dispose() {
@@ -40,6 +37,11 @@ class _SearchableAppListState extends State<SearchableAppList> {
   Widget build(BuildContext ctx) {
     ThemeData theme = Theme.of(context);
 
+    List<Application> results = widget.appList
+        .where(_filterApp)
+        .toList();
+    results.sort(_appSorter);
+
     return Column(
         children: [
           Container(
@@ -47,13 +49,10 @@ class _SearchableAppListState extends State<SearchableAppList> {
             child: Align(
                 alignment: Alignment.topRight,
                 child: TextField(
-                    //onChanged: onInput,
                     enableSuggestions: false,
                     controller: _inputController,
                     decoration: InputDecoration(
                         contentPadding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
-                        //prefix: Container(padding: , child: Text('')),
-                        //prefixStyle: TextStyle(color: theme.primaryColor),
                         hintStyle: TextStyle(color: Color(0x88D8DEE9)),
                         hintText: 'Search',
                         suffix: IconButton(
@@ -64,24 +63,10 @@ class _SearchableAppListState extends State<SearchableAppList> {
                 )
             ),
           ),
-          Expanded(child: FutureBuilder(
-            future: widget.appListF,
-            builder: (ctx, AsyncSnapshot<List<Application>> snap) {
-              if (!snap.hasData) {
-                return Text('Loading...');
-              }
-
-              List<Application> results = snap.data
-                  .where(_filterApp)
-                  .toList();
-              results.sort(_appSorter);
-
-              return AppList(
+          Expanded(child: AppList(
                   appList: results,
                   openApp: widget.openApp,
                   openOptionsMenu: widget.openOptionsMenu,
-              );
-            }
           )),
         ],
     );
@@ -89,11 +74,11 @@ class _SearchableAppListState extends State<SearchableAppList> {
 }
 
 class SearchableAppList extends StatefulWidget {
-  Future<List<Application>> appListF;
+  List<Application> appList;
   void Function(Application) openApp;
   void Function(Application) openOptionsMenu;
   
-  SearchableAppList({ this.appListF, this.openApp, this.openOptionsMenu }): super();
+  SearchableAppList({ this.appList, this.openApp, this.openOptionsMenu }): super();
 
   @override
   _SearchableAppListState createState() => _SearchableAppListState();

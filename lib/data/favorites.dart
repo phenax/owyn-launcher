@@ -3,7 +3,6 @@ import 'package:device_apps/device_apps.dart';
 import 'dart:async';
 
 const String FAVORITES = 'favorites';
-const String SEPERATOR = ',';
 
 StreamController<List<Application>> favorites_$ = StreamController<List<Application>>.broadcast();
 
