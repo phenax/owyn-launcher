@@ -21,7 +21,7 @@ void main() {
     expect(find.byType(ListTile), findsNothing);
   });
 
-  testWidgets('Should render nothing for empty list', (WidgetTester tester) async {
+  testWidgets('Should render nothing for list of 4 items', (WidgetTester tester) async {
     await tester.pumpWidget(wrapper(AppList(appList: appList)));
 
     expect(find.byType(ListTile), findsNWidgets(4));

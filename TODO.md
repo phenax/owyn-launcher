@@ -1,8 +1,10 @@
 # TODO
 
 ## Global
-  - [ ] Add icons in context menu
   - [ ] Some good docs with a gif of ui
+  - [ ] Add a refresh button
+  - [ ] Make dark mode config boolean
+  - [X] Add icons in context menu
   - [X] Start writing tests
   - [X] Transision between pages between pages
   - [X] Find a way to preload both pages and stop from "loading"
@@ -29,6 +31,7 @@
 ## Applications list
   - [ ] Sort the list according to frequently used
   - [ ] Make app list load faster
+  - [ ] Clear button for search
   - [X] Create app list
   - [X] Make app list searchable
   - [X] Create options menu on long press

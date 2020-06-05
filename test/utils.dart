@@ -13,7 +13,7 @@ Widget wrapper(Widget view) {
     );
 }
 
-Future<void> waitFor(Duration duration) { return Future.delayed(duration, () {}); }
+Future<int> waitFor(Duration duration) { return Future.delayed(duration, () => 1); }
 
 Application makeApp(String name, String pkgName) {
   return Application({
