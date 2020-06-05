@@ -1,14 +1,14 @@
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:async';
 
-String defaultTheme = 'dark';
+final defaultDarkMode = true;
 
 class Config {
-  String theme = defaultTheme;
-  Config({ this.theme }) {}
+  bool isDark = defaultDarkMode;
+  Config({ this.isDark }) {}
 
   bool isDarkMode() {
-    return theme != 'light';
+    return isDark;
   }
 }
 
@@ -16,10 +16,9 @@ StreamController<Config> config_$ = StreamController<Config>.broadcast();
 
 Future<Config> getConfig() async {
   final prefs = await SharedPreferences.getInstance();
+  final isDark = prefs.getBool('isDark');
 
-  return Config(
-    theme: prefs.getString('theme'),
-  );
+  return Config(isDark: isDark == null ? defaultDarkMode : isDark);
 }
 
 void refreshConfig() async {
@@ -34,7 +33,7 @@ Stream<Config> getConfig$() {
 void setConfig(Config config) async {
   final prefs = await SharedPreferences.getInstance();
   
-  prefs.setString('theme', config.theme);
+  prefs.setBool('isDark', config.isDark);
 
   config_$.add(await getConfig());
 }
@@ -42,10 +41,6 @@ void setConfig(Config config) async {
 void toggleTheme() async {
   final config = await getConfig();
 
-  if (config.theme == 'dark') {
-    setConfig(Config(theme: 'light'));
-  } else {
-    setConfig(Config(theme: 'dark'));
-  }
+  setConfig(Config(isDark: !config.isDark));
 }
 
