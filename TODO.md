@@ -1,11 +1,11 @@
 # TODO
 
 ## Global
-  - [ ] Make dark mode config boolean
-  - [ ] Add settings menu with dark/light and refresh
-  - [ ] Add a refresh button
   - [ ] Some good docs with a gif of ui
   - [X] Add icons in context menu
+  - [X] Make dark mode config boolean
+  - [X] Add settings menu with dark/light and refresh
+  - [X] Add a refresh button
   - [X] Start writing tests
   - [X] Transision between pages between pages
   - [X] Find a way to preload both pages and stop from "loading"
@@ -13,8 +13,8 @@
 
 ## Issues
   - [ ] Fix scroll/fling conflict (snap)
-  - [ ] Uninstall from favorites doesnt update list
   - [ ] Fix test cases
+  - [X] Uninstall from favorites doesnt update list (Just gonna use the refresh btn)
   - [X] Make keyboard close on swipe
   - [X] Fix uninstall action issue
   - [X] Disable back button
@@ -31,7 +31,7 @@
 
 ## Applications list
   - [ ] Sort the list according to frequently used or create two lists
-  - [ ] Make app list load faster
+  - [X] Make app list load faster
   - [X] Clear button for search
   - [X] Create app list
   - [X] Make app list searchable
