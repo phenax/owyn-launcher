@@ -28,8 +28,7 @@ class _SearchableAppListState extends State<SearchableAppList> {
 
   bool _filterApp(Application a) {
     var searchTerm = _inputController.text;
-    return a.appName.toLowerCase().contains(searchTerm.toLowerCase()) ||
-        a.packageName.toLowerCase().contains(searchTerm.toLowerCase());
+    return a.appName.toLowerCase().contains(searchTerm.toLowerCase());
   }
 
   Widget getIcon(IconData icon, { Color color }) {
