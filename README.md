@@ -1,19 +1,26 @@
 # owyn
-Only What You Need (owyn) is a minimal launcher for android written in dart
+Owyn(Only What You Need) launcher is a minimal launcher for android
 
-## What do I need?
-* A clock showing me the time
+
+## What I need from my launcher..
+* A clean interface
+* A clock
 * A searchable list of apps
 * Easy access to my favorite apps
 * Ability to uninstall apps
 
+
 ## Install
-Grab an apk from the releases and install it.
+Not available on play store and never will be.
+Grab an apk from the releases section and install it.
+
 
 ## Build it yourself
+Make sure you have flutter installed on your system.
+
 ```
 flutter build apk --split-per-abi
 ```
 
-The apks will be at `build/app/outputs/apk/release/`
+This will build apks in `build/app/outputs/apk/release/`.
 
