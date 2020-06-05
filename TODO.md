@@ -1,9 +1,10 @@
 # TODO
 
 ## Global
-  - [ ] Some good docs with a gif of ui
-  - [ ] Add a refresh button
   - [ ] Make dark mode config boolean
+  - [ ] Add settings menu with dark/light and refresh
+  - [ ] Add a refresh button
+  - [ ] Some good docs with a gif of ui
   - [X] Add icons in context menu
   - [X] Start writing tests
   - [X] Transision between pages between pages
@@ -29,9 +30,9 @@
   - [X] Remove from favorites
 
 ## Applications list
-  - [ ] Sort the list according to frequently used
+  - [ ] Sort the list according to frequently used or create two lists
   - [ ] Make app list load faster
-  - [ ] Clear button for search
+  - [X] Clear button for search
   - [X] Create app list
   - [X] Make app list searchable
   - [X] Create options menu on long press
