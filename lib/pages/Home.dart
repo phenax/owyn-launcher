@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:device_apps/device_apps.dart';
 
+import '../components/Option.dart';
 import '../components/AppList.dart';
 import '../components/FixedContainer.dart';
 import '../data/config.dart';
@@ -14,6 +15,47 @@ class StatusInfoCard extends StatelessWidget {
 
   final timeFormat = DateFormat('h:mm a'); // H fr 24 hrs
   final dateFormat = DateFormat('EEEE, d MMM');
+
+  Widget buildOptionsMenu(BuildContext ctx) {
+    var theme = Theme.of(ctx);
+
+    return Dialog(
+        child: Container(
+            decoration: BoxDecoration(
+                color: theme.backgroundColor,
+            ),
+            height: 120.0,
+            child: ListView(
+                children: [
+                  Option(
+                      icon: Icon(
+                          Icons.brightness_4,
+                          color: theme.primaryColor,
+                          size: 16.0,
+                          semanticLabel: 'Toggle dark mode',
+                      ),
+                      child: Text('Toggle dark mode'),
+                      onTap: toggleTheme,
+                  ),
+                  Option(
+                      icon: Icon(
+                          Icons.refresh,
+                          color: theme.primaryColor,
+                          size: 16.0,
+                          semanticLabel: 'Refresh',
+                      ),
+                      child: Text('Refresh'),
+                      onTap: () {},
+                  ),
+                ],
+            ),
+        ),
+    );
+  }
+
+  void showOptions(BuildContext ctx) {
+    showDialog(context: ctx, builder: buildOptionsMenu);
+  }
 
   @override
   Widget build(BuildContext ctx) {
@@ -53,20 +95,19 @@ class StatusInfoCard extends StatelessWidget {
                 Container(
                     width: 40,
                     height: 30,
-                    child: Text(''),
-                    //child: IconButton(
-                        //padding: const EdgeInsets.all(0.0),
-                        //visualDensity: const VisualDensity(vertical: 0.0, horizontal: 0.0),
-                        //icon: Icon(
-                            //Icons.brightness_4,
-                            //color: theme.primaryColor,
-                            //size: 16.0,
-                            //semanticLabel: 'Toggle dark mode',
-                        //),
-                        //tooltip: 'Toggle dark mode',
-                        //enableFeedback: true,
-                        //onPressed: () { toggleTheme(); }
-                    //),
+                    child: IconButton(
+                        padding: const EdgeInsets.all(0.0),
+                        visualDensity: const VisualDensity(vertical: 0.0, horizontal: 0.0),
+                        icon: Icon(
+                            Icons.more_vert,
+                            color: theme.primaryColor,
+                            size: 20.0,
+                            semanticLabel: 'Options',
+                        ),
+                        tooltip: 'Options',
+                        enableFeedback: true,
+                        onPressed: () => showOptions(ctx),
+                    ),
                 ),
               ],
             ),

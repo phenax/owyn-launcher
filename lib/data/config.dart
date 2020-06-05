@@ -8,7 +8,7 @@ class Config {
   Config({ this.isDark }) {}
 
   bool isDarkMode() {
-    return isDark;
+    return isDark == null ? defaultDarkMode : isDark;
   }
 }
 
