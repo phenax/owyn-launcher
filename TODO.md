@@ -1,7 +1,7 @@
 # TODO
 
 ## Global
-  - [ ] Some good docs with a gif of ui
+  - [X] Some good docs with a gif of ui
   - [X] Add icons in context menu
   - [X] Make dark mode config boolean
   - [X] Add settings menu with dark/light and refresh
