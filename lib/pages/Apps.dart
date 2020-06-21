@@ -10,8 +10,9 @@ class AppsView extends StatelessWidget {
   void Function(Application) openApp;
   void Function(BuildContext, Application) openOptionsMenu;
   List<Application> appList;
+  FocusNode searchFieldFocus;
 
-  AppsView({ this.appList, this.openApp, this.openOptionsMenu }): super();
+  AppsView({ this.appList, this.openApp, this.openOptionsMenu, this.searchFieldFocus }): super();
 
   @override
   Widget build(BuildContext ctx) {
@@ -21,6 +22,7 @@ class AppsView extends StatelessWidget {
             appList: appList,
             openApp: openApp,
             openOptionsMenu: (app) => openOptionsMenu(ctx, app),
+            searchFieldFocus: searchFieldFocus,
         ),
     );
   }

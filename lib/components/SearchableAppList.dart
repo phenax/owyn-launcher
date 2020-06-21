@@ -51,6 +51,7 @@ class _SearchableAppListState extends State<SearchableAppList> {
                 child: TextField(
                     enableSuggestions: false,
                     controller: _inputController,
+                    focusNode: widget.searchFieldFocus,
                     decoration: InputDecoration(
                         contentPadding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
                         hintStyle: TextStyle(color: Color(0x88D8DEE9)),
@@ -77,8 +78,9 @@ class SearchableAppList extends StatefulWidget {
   List<Application> appList;
   void Function(Application) openApp;
   void Function(Application) openOptionsMenu;
+  FocusNode searchFieldFocus;
   
-  SearchableAppList({ this.appList, this.openApp, this.openOptionsMenu }): super();
+  SearchableAppList({ this.appList, this.openApp, this.openOptionsMenu, this.searchFieldFocus }): super();
 
   @override
   _SearchableAppListState createState() => _SearchableAppListState();
