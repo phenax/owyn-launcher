@@ -1,5 +1,5 @@
-# owyn
-Owyn(Only What You Need) launcher is a minimal launcher for android
+# Owyn launcher
+Owyn (_Only What You Need_) launcher is a minimal launcher for android
 
 
 ## What I need from my launcher..
@@ -8,6 +8,10 @@ Owyn(Only What You Need) launcher is a minimal launcher for android
 * A searchable list of apps
 * Easy access to my favorite apps
 * Ability to uninstall apps
+
+
+## Screens
+![Screenshots](media/screens.jpg)
 
 
 ## Install
