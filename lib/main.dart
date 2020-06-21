@@ -36,6 +36,9 @@ class MyAppState extends StreamState<MyApp> {
       stream$: Stream.periodic(Duration(seconds: 1), (_x) => DateTime.now()).asBroadcastStream(),
       value: DateTime.now(),
   );
+
+  FocusNode searchFieldFocus = FocusNode();
+
   void initState() {
     super.initState();
 
@@ -49,6 +52,11 @@ class MyAppState extends StreamState<MyApp> {
     refreshApplications();
 
     initStateValue(dateTime);
+  }
+
+  void dispose() {
+    searchFieldFocus.dispose();
+    super.dispose();
   }
 
   void openApp(Application app) {
@@ -103,8 +111,13 @@ class MyAppState extends StreamState<MyApp> {
               onWillPop: () => Future.value(false),
               child: PageView(
                   controller: PageController(keepPage: true),
-                  onPageChanged: (_x) {
-                    SystemChannels.textInput.invokeMethod('TextInput.hide');
+                  onPageChanged: (x) {
+                    if (x == 1) {
+                      searchFieldFocus.requestFocus();
+                    } else {
+                      searchFieldFocus.unfocus();
+                      //SystemChannels.textInput.invokeMethod('TextInput.hide');
+                    }
                   },
                   children: [
                     HomeView(
@@ -117,6 +130,7 @@ class MyAppState extends StreamState<MyApp> {
                         appList: applications.value,
                         openApp: openApp,
                         openOptionsMenu: openOptionsMenu,
+                        searchFieldFocus: searchFieldFocus,
                     ),
                   ],
               ),
