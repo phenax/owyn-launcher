@@ -46,9 +46,11 @@ class _SearchableAppListState extends State<SearchableAppList> {
         children: [
           Container(
             height: 30,
+            margin: EdgeInsets.only(top: 20),
             child: Align(
                 alignment: Alignment.topRight,
                 child: TextField(
+                  cursorColor: Colors.white,
                     enableSuggestions: false,
                     controller: _inputController,
                     focusNode: widget.searchFieldFocus,
@@ -57,9 +59,14 @@ class _SearchableAppListState extends State<SearchableAppList> {
                         hintStyle: TextStyle(color: Color(0x88D8DEE9)),
                         hintText: 'Search',
                         suffix: IconButton(
-                            icon: getIcon(Icons.close, color: Colors.red[400]),
+                            icon: getIcon(Icons.close, color: Colors.white),
                             onPressed: reset,
                         ),
+                        border: InputBorder.none,
+                        focusedBorder: InputBorder.none,
+                        enabledBorder: InputBorder.none,
+                        errorBorder: InputBorder.none,
+                        disabledBorder: InputBorder.none,
                     ),
                 )
             ),
