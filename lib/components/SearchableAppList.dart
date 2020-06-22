@@ -18,35 +18,52 @@ class _SearchableAppListState extends State<SearchableAppList> {
     super.initState();
   }
 
+  @override
+  void dispose() {
+    editingController.dispose();
+    super.dispose();
+  }
+
   /* bool _filterApp(Application a) {
     var searchTerm = _inputController.text;
     return a.appName.toLowerCase().contains(searchTerm.toLowerCase());
   } */
 
-  void filterSearchResults(String query) {
-  List<Application> dummySearchList = List<Application>();
-  dummySearchList.addAll(widget.appList);
-  if(query.isNotEmpty) {
-    List<Application> dummyListData = List<Application>();
-    dummySearchList.forEach((item) {
-      if(item.appName.toLowerCase().contains(query.toLowerCase())) {
-        dummyListData.add(item);
-      }
-    });
-    dummySearchList.sort(_appSorter);
-    setState(() {
-      items.clear();
-      items.addAll(dummyListData);
-    });
-    return;
-  } else {
-    items.sort(_appSorter);
-    setState(() {
-      items.clear();
-      items.addAll(widget.appList);
-    });
+  void reset(){
+    editingController.clear();
   }
-}
+
+  void filterSearchResults(String query) {
+    List<Application> allApps = List<Application>();
+    allApps.addAll(widget.appList);
+    if(query.isNotEmpty) {
+      List<Application> filteredApps = List<Application>();
+      allApps.forEach((item) {
+        if(item.appName.toLowerCase().contains(query.toLowerCase())) {
+          filteredApps.add(item);
+        }
+      });
+      if(filteredApps.length == 1){
+        editingController.clear();
+        widget.openApp(filteredApps[0]);
+      }else {
+        filteredApps.sort(_appSorter);
+        setState(() {
+          items.clear();
+          items.addAll(filteredApps);
+        });
+      }
+      return;
+    } else {
+      items.sort(_appSorter);
+      setState(() {
+        items.clear();
+        items.addAll(widget.appList);
+      });
+    }
+  }
+
+
 
   Widget getIcon(IconData icon, { Color color }) {
     var inputIconSize = 16.0;
@@ -78,7 +95,9 @@ class _SearchableAppListState extends State<SearchableAppList> {
                         hintText: 'Search',
                         suffix: IconButton(
                             icon: getIcon(Icons.close, color: Colors.white),
-                            onPressed: (){},
+                            onPressed: (){
+                              reset();
+                            },
                         ),
                         border: InputBorder.none,
                         focusedBorder: InputBorder.none,
