@@ -4,29 +4,49 @@ import 'package:device_apps/device_apps.dart';
 import 'AppList.dart';
 
 class _SearchableAppListState extends State<SearchableAppList> {
-  final _inputController = TextEditingController();
-
-  void initState() {
-    super.initState();
-  }
-
-  void dispose() {
-    _inputController.dispose();
-    super.dispose();
-  }
-
-  void reset() {
-    _inputController.clear();
-  }
+  TextEditingController editingController = TextEditingController();
+  var items = List<Application>();
 
   int _appSorter(Application a, Application b) {
     return a.appName.toLowerCase().compareTo(b.appName.toLowerCase());
   }
 
-  bool _filterApp(Application a) {
+  @override
+  void initState() {
+    items.addAll(widget.appList);
+    items.sort(_appSorter);
+    super.initState();
+  }
+
+  /* bool _filterApp(Application a) {
     var searchTerm = _inputController.text;
     return a.appName.toLowerCase().contains(searchTerm.toLowerCase());
+  } */
+
+  void filterSearchResults(String query) {
+  List<Application> dummySearchList = List<Application>();
+  dummySearchList.addAll(widget.appList);
+  if(query.isNotEmpty) {
+    List<Application> dummyListData = List<Application>();
+    dummySearchList.forEach((item) {
+      if(item.appName.toLowerCase().contains(query.toLowerCase())) {
+        dummyListData.add(item);
+      }
+    });
+    dummySearchList.sort(_appSorter);
+    setState(() {
+      items.clear();
+      items.addAll(dummyListData);
+    });
+    return;
+  } else {
+    items.sort(_appSorter);
+    setState(() {
+      items.clear();
+      items.addAll(widget.appList);
+    });
   }
+}
 
   Widget getIcon(IconData icon, { Color color }) {
     var inputIconSize = 16.0;
@@ -37,11 +57,6 @@ class _SearchableAppListState extends State<SearchableAppList> {
   Widget build(BuildContext ctx) {
     ThemeData theme = Theme.of(context);
 
-    List<Application> results = widget.appList
-        .where(_filterApp)
-        .toList();
-    results.sort(_appSorter);
-
     return Column(
         children: [
           Container(
@@ -50,9 +65,12 @@ class _SearchableAppListState extends State<SearchableAppList> {
             child: Align(
                 alignment: Alignment.topRight,
                 child: TextField(
-                  cursorColor: Colors.white,
+                    cursorColor: Colors.white,
+                    onChanged: (value) {
+                      filterSearchResults(value);
+                    },
                     enableSuggestions: false,
-                    controller: _inputController,
+                    controller: editingController,
                     focusNode: widget.searchFieldFocus,
                     decoration: InputDecoration(
                         contentPadding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
@@ -60,7 +78,7 @@ class _SearchableAppListState extends State<SearchableAppList> {
                         hintText: 'Search',
                         suffix: IconButton(
                             icon: getIcon(Icons.close, color: Colors.white),
-                            onPressed: reset,
+                            onPressed: (){},
                         ),
                         border: InputBorder.none,
                         focusedBorder: InputBorder.none,
@@ -72,7 +90,7 @@ class _SearchableAppListState extends State<SearchableAppList> {
             ),
           ),
           Expanded(child: AppList(
-                  appList: results,
+                  appList: items,
                   openApp: widget.openApp,
                   openOptionsMenu: widget.openOptionsMenu,
           )),
