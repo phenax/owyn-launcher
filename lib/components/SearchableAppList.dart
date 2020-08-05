@@ -4,29 +4,66 @@ import 'package:device_apps/device_apps.dart';
 import 'AppList.dart';
 
 class _SearchableAppListState extends State<SearchableAppList> {
-  final _inputController = TextEditingController();
-
-  void initState() {
-    super.initState();
-  }
-
-  void dispose() {
-    _inputController.dispose();
-    super.dispose();
-  }
-
-  void reset() {
-    _inputController.clear();
-  }
+  TextEditingController editingController = TextEditingController();
+  var items = List<Application>();
 
   int _appSorter(Application a, Application b) {
     return a.appName.toLowerCase().compareTo(b.appName.toLowerCase());
   }
 
-  bool _filterApp(Application a) {
+  @override
+  void initState() {
+    items.addAll(widget.appList);
+    items.sort(_appSorter);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    editingController.dispose();
+    super.dispose();
+  }
+
+  /* bool _filterApp(Application a) {
     var searchTerm = _inputController.text;
     return a.appName.toLowerCase().contains(searchTerm.toLowerCase());
+  } */
+
+  void reset(){
+    editingController.clear();
   }
+
+  void filterSearchResults(String query) {
+    List<Application> allApps = List<Application>();
+    allApps.addAll(widget.appList);
+    if(query.isNotEmpty) {
+      List<Application> filteredApps = List<Application>();
+      allApps.forEach((item) {
+        if(item.appName.toLowerCase().contains(query.toLowerCase())) {
+          filteredApps.add(item);
+        }
+      });
+      if(filteredApps.length == 1){
+        editingController.clear();
+        widget.openApp(filteredApps[0]);
+      }else {
+        filteredApps.sort(_appSorter);
+        setState(() {
+          items.clear();
+          items.addAll(filteredApps);
+        });
+      }
+      return;
+    } else {
+      items.sort(_appSorter);
+      setState(() {
+        items.clear();
+        items.addAll(widget.appList);
+      });
+    }
+  }
+
+
 
   Widget getIcon(IconData icon, { Color color }) {
     var inputIconSize = 16.0;
@@ -37,35 +74,42 @@ class _SearchableAppListState extends State<SearchableAppList> {
   Widget build(BuildContext ctx) {
     ThemeData theme = Theme.of(context);
 
-    List<Application> results = widget.appList
-        .where(_filterApp)
-        .toList();
-    results.sort(_appSorter);
-
     return Column(
         children: [
           Container(
             height: 30,
+            margin: EdgeInsets.only(top: 20),
             child: Align(
                 alignment: Alignment.topRight,
                 child: TextField(
+                    cursorColor: Colors.white,
+                    onChanged: (value) {
+                      filterSearchResults(value);
+                    },
                     enableSuggestions: false,
-                    controller: _inputController,
+                    controller: editingController,
                     focusNode: widget.searchFieldFocus,
                     decoration: InputDecoration(
                         contentPadding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
                         hintStyle: TextStyle(color: Color(0x88D8DEE9)),
                         hintText: 'Search',
                         suffix: IconButton(
-                            icon: getIcon(Icons.close, color: Colors.red[400]),
-                            onPressed: reset,
+                            icon: getIcon(Icons.close, color: Colors.white),
+                            onPressed: (){
+                              reset();
+                            },
                         ),
+                        border: InputBorder.none,
+                        focusedBorder: InputBorder.none,
+                        enabledBorder: InputBorder.none,
+                        errorBorder: InputBorder.none,
+                        disabledBorder: InputBorder.none,
                     ),
                 )
             ),
           ),
           Expanded(child: AppList(
-                  appList: results,
+                  appList: items,
                   openApp: widget.openApp,
                   openOptionsMenu: widget.openOptionsMenu,
           )),
