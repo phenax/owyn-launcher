@@ -35,8 +35,6 @@ class _SearchableAppListState extends State<SearchableAppList> {
 
   @override
   Widget build(BuildContext ctx) {
-    ThemeData theme = Theme.of(context);
-
     List<Application> results = widget.appList
         .where(_filterApp)
         .toList();
@@ -68,6 +66,7 @@ class _SearchableAppListState extends State<SearchableAppList> {
                   appList: results,
                   openApp: widget.openApp,
                   openOptionsMenu: widget.openOptionsMenu,
+                  allowReorder: false,
           )),
         ],
     );

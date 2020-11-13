@@ -11,7 +11,7 @@ import '../data/applications.dart';
 import '../data/favorites.dart';
 
 class StatusInfoCard extends StatelessWidget {
-  DateTime dateTime;
+  final DateTime dateTime;
 
   StatusInfoCard({ this.dateTime }): super();
 
@@ -122,10 +122,10 @@ class StatusInfoCard extends StatelessWidget {
 }
 
 class HomeView extends StatelessWidget {
-  DateTime dateTime;
-  List<Application> favoriteApps;
-  void Function(Application) openApp;
-  void Function(BuildContext, Application) openOptionsMenu;
+  final DateTime dateTime;
+  final List<Application> favoriteApps;
+  final void Function(Application) openApp;
+  final void Function(BuildContext, Application) openOptionsMenu;
 
   HomeView({ this.dateTime, this.favoriteApps, this.openApp, this.openOptionsMenu }): super();
 
@@ -141,6 +141,7 @@ class HomeView extends StatelessWidget {
                     appList: favoriteApps,
                     openApp: openApp,
                     openOptionsMenu: (app) => openOptionsMenu(ctx, app),
+                    allowReorder: true,
                 ),
               )),
             ],

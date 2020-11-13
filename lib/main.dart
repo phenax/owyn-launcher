@@ -116,7 +116,6 @@ class MyAppState extends StreamState<MyApp> {
                       searchFieldFocus.requestFocus();
                     } else {
                       searchFieldFocus.unfocus();
-                      //SystemChannels.textInput.invokeMethod('TextInput.hide');
                     }
                   },
                   children: [
