@@ -1,8 +1,9 @@
 import React, {useState} from 'react';
-import {SafeAreaView, Text, View} from 'react-native';
+import {SafeAreaView} from 'react-native';
 import {InstalledApps} from 'react-native-launcher-kit';
 import Swiper from 'react-native-swiper';
 import {AppList} from './src/screens/AppList';
+import {Home} from './src/screens/Home';
 
 function App(): React.JSX.Element {
   const [apps, setApps] = useState(() => InstalledApps.getSortedApps());
@@ -20,9 +21,7 @@ function App(): React.JSX.Element {
         activeDot={<></>}
         index={screenIndex}
         onIndexChanged={setScreenIndex}>
-        <View>
-          <Text>Wow</Text>
-        </View>
+        <Home />
 
         <AppList apps={apps} screenIndex={screenIndex} />
       </Swiper>
