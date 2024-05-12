@@ -23,7 +23,7 @@
           useGoogleAPIs = true;
           buildToolsVersions = [ "30.0.3" buildToolVersion ];
           includeNDK = true;
-          ndkVersion = "23.1.7779620";
+          ndkVersion = "26.1.10909125";
           cmakeVersions = [ "3.22.1" ];
         };
       in pkgs.mkShell rec {
@@ -36,8 +36,12 @@
           androidComposition.androidsdk
           androidComposition.platform-tools
           jdk
+
           just
+
+          libxml2
         ];
+        nativeBuildInputs = with pkgs; [ clang ];
 
         JAVA_HOME = "${jdk.home}";
         ANDROID_JAVA_HOME = JAVA_HOME;
@@ -48,6 +52,9 @@
 
         GRADLE_OPTS =
           "-Dorg.gradle.project.android.aapt2FromMavenOverride=${androidComposition.androidsdk}/libexec/android-sdk/build-tools/${buildToolVersion}/aapt2";
+
+        LIBCLANG_PATH = "${pkgs.libclang.lib}/lib";
+        LD_LIBRARY_PATH = "${pkgs.lib.makeLibraryPath (buildInputs ++ nativeBuildInputs)}";
       };
     in
     flake-utils.lib.eachDefaultSystem

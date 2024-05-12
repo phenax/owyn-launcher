@@ -1,14 +1,14 @@
-import React, {useMemo} from 'react';
-import {Text, View} from 'react-native';
+import React from 'react';
+import {View} from 'react-native';
 import {Clock} from '../components/Clock';
+import {AppDetail} from 'react-native-launcher-kit/typescript/Interfaces/InstalledApps';
+import {Favorites} from '../components/Favorites';
 
-export const Home: React.FC = () => {
+export const Home: React.FC<{apps: AppDetail[]}> = ({apps}) => {
   return (
     <View>
       <Clock />
-      <View className="p-6">
-        <Text>Favorites list</Text>
-      </View>
+      <Favorites apps={apps} />
     </View>
   );
 };
