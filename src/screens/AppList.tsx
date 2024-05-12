@@ -3,7 +3,10 @@ import React, {useMemo, useState} from 'react';
 import {ScrollView, Text, TextInput, View} from 'react-native';
 import {AppDetail} from 'react-native-launcher-kit/typescript/Interfaces/InstalledApps';
 
-export const AppList: React.FC<{apps: AppDetail[]}> = ({apps}) => {
+export const AppList: React.FC<{apps: AppDetail[]; screenIndex: number}> = ({
+  apps,
+  screenIndex,
+}) => {
   const [searchText, setSearchText] = useState('');
 
   const filteredApps = useMemo(() => {
@@ -16,6 +19,7 @@ export const AppList: React.FC<{apps: AppDetail[]}> = ({apps}) => {
     <View>
       <View>
         <TextInput
+          key={screenIndex}
           autoFocus
           autoCorrect={false}
           value={searchText}

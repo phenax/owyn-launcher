@@ -5,7 +5,9 @@ import Swiper from 'react-native-swiper';
 import {AppList} from './src/screens/AppList';
 
 function App(): React.JSX.Element {
-  const [apps, _setApps] = useState(() => InstalledApps.getSortedApps());
+  const [apps, setApps] = useState(() => InstalledApps.getSortedApps());
+  const refreshApps = () => setApps(InstalledApps.getSortedApps());
+  const [screenIndex, setScreenIndex] = useState(0);
 
   return (
     <SafeAreaView className="flex flex-1 bg-slate-100 dark:bg-black">
@@ -15,12 +17,14 @@ function App(): React.JSX.Element {
         loop={false}
         loadMinimal
         dot={<></>}
-        activeDot={<></>}>
+        activeDot={<></>}
+        index={screenIndex}
+        onIndexChanged={setScreenIndex}>
         <View>
           <Text>Wow</Text>
         </View>
 
-        <AppList apps={apps} />
+        <AppList apps={apps} screenIndex={screenIndex} />
       </Swiper>
     </SafeAreaView>
   );
