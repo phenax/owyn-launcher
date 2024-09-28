@@ -1,31 +1,46 @@
-import {useEffect, useState} from 'react';
 import {useAsyncStorage} from '@react-native-async-storage/async-storage';
 import {useStableCallback} from './useStableCallback';
+import {atom, useAtom} from 'jotai';
+
+const favoriteAppNamesAtom = atom<string[]>([]);
+
+const serialize = (packageNames: string[]) => JSON.stringify(packageNames);
+
+const deserialize = (packageNames: string): string[] => {
+  try {
+    const apps = JSON.parse(packageNames);
+    if (!Array.isArray(apps)) return [];
+    return apps;
+  } catch (err) {
+    console.error(err);
+    return [];
+  }
+};
 
 export const useFavorites = () => {
   const favoritesStorage = useAsyncStorage('favorites');
-  const [favoriteAppNames, setFavoriteAppNames] = useState<string[]>([]);
+  const [favoriteAppNames, setFavoriteAppNames] = useAtom(favoriteAppNamesAtom);
 
   const getFavoriteAppNames = useStableCallback(async (): Promise<string[]> => {
-    try {
-      const result = await favoritesStorage.getItem();
-      const apps = result ? JSON.parse(result) : [];
-      if (!Array.isArray(apps)) return [];
-      return apps;
-    } catch (err) {
-      console.error(err);
-      return [];
-    }
+    const result = await favoritesStorage.getItem();
+    return deserialize(result ?? 'null');
+  });
+
+  const setFavoritesState = useStableCallback((packageNames: string[]) => {
+    const newNames = [...new Set(packageNames)];
+    if (serialize(newNames) === serialize(favoriteAppNames)) return newNames;
+
+    setFavoriteAppNames(newNames);
+    return newNames;
+  });
+
+  const setFavorites = useStableCallback(async (packageNames: string[]) => {
+    const newNames = setFavoritesState(packageNames);
+    await favoritesStorage.setItem(serialize(newNames));
   });
 
   const refreshFavorites = useStableCallback(async () => {
-    getFavoriteAppNames().then(setFavoriteAppNames);
-  });
-
-  const setFavorites = useStableCallback(async (names: string[]) => {
-    const newNames = [...new Set(names)];
-    await favoritesStorage.setItem(JSON.stringify(newNames));
-    refreshFavorites();
+    getFavoriteAppNames().then(setFavoritesState);
   });
 
   const addToFavorites = useStableCallback(async (packageName: string) => {
@@ -40,10 +55,6 @@ export const useFavorites = () => {
   const isFavorite = useStableCallback((packageName: string) =>
     favoriteAppNames.includes(packageName),
   );
-
-  useEffect(() => {
-    refreshFavorites();
-  }, [refreshFavorites]);
 
   return {
     addToFavorites,

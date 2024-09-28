@@ -2,7 +2,10 @@ import {Text, View, Modal, TouchableOpacity, Pressable} from 'react-native';
 import {AppDetail} from 'react-native-launcher-kit/typescript/Interfaces/InstalledApps';
 import {useFavorites} from '../hooks/useFavorites';
 import React, {useState} from 'react';
+// @ts-expect-error No declaration file
 import IntentLauncher from '@angelkrak/react-native-intent-launcher';
+import {TouchableHighlight} from 'react-native-gesture-handler';
+import {useStableCallback} from '../hooks/useStableCallback';
 
 export const AppMenu: React.FC<React.PropsWithChildren<{app: AppDetail}>> = ({
   app,
@@ -11,24 +14,26 @@ export const AppMenu: React.FC<React.PropsWithChildren<{app: AppDetail}>> = ({
   const [isOpen, setIsOpen] = useState(false);
   const {addToFavorites, isFavorite, removeFromFavorites} = useFavorites();
 
-  const menuPress = (fn: () => Promise<void> | void) => async () => {
-    await fn();
-    setIsOpen(false);
-  };
+  const openContextMenu = useStableCallback(() => setIsOpen(true));
+  const closeContextMenu = useStableCallback(() => setIsOpen(false));
 
+  const onMenuItemPress = (fn: () => Promise<void> | void) => async () => {
+    closeContextMenu();
+    await fn();
+  };
   const menuItems = [
     isFavorite(app.packageName)
       ? {
           label: 'Remove from favorites',
-          onPress: menuPress(() => removeFromFavorites(app.packageName)),
+          onPress: onMenuItemPress(() => removeFromFavorites(app.packageName)),
         }
       : {
           label: 'Add to favorites',
-          onPress: menuPress(() => addToFavorites(app.packageName)),
+          onPress: onMenuItemPress(() => addToFavorites(app.packageName)),
         },
     {
       label: 'App info',
-      onPress: menuPress(() =>
+      onPress: onMenuItemPress(() =>
         IntentLauncher.startActivity({
           action: 'android.settings.APPLICATION_DETAILS_SETTINGS',
           data: 'package:' + app.packageName,
@@ -37,7 +42,7 @@ export const AppMenu: React.FC<React.PropsWithChildren<{app: AppDetail}>> = ({
     },
     {
       label: 'Uninstall',
-      onPress: menuPress(() =>
+      onPress: onMenuItemPress(() =>
         IntentLauncher.startActivity({
           action: 'android.intent.action.DELETE',
           data: 'package:' + app.packageName,
@@ -46,25 +51,33 @@ export const AppMenu: React.FC<React.PropsWithChildren<{app: AppDetail}>> = ({
     },
   ];
 
+  const openApp = useStableCallback(() =>
+    IntentLauncher.startAppByPackageName(app.packageName),
+  );
+
   return (
     <>
-      <TouchableOpacity onLongPress={() => setIsOpen(true)}>
+      <TouchableHighlight
+        activeOpacity={0.7}
+        underlayColor="#101010"
+        onPress={openApp}
+        onLongPress={openContextMenu}>
         {children}
-      </TouchableOpacity>
+      </TouchableHighlight>
 
       <Modal
         visible={isOpen}
         transparent={true}
         animationType="none"
-        onRequestClose={() => setIsOpen(false)}>
-        <TouchableOpacity className="flex-1" onPress={() => setIsOpen(false)}>
+        onRequestClose={closeContextMenu}>
+        <TouchableOpacity className="flex-1" onPress={closeContextMenu}>
           <View className="flex justify-center items-center h-full">
-            <View className="shadow-lg bg-gray-900 w-2/3">
+            <View className="bg-[#181818] border border-[#222] w-2/3">
               {menuItems.map((menuItem) => (
                 <Pressable
                   key={menuItem.label}
                   onPress={menuItem.onPress}
-                  className="py-3 px-4 border-b border-gray-800 last:border-b-0">
+                  className="py-3 px-4 border-b border-[#222] last:border-b-0 last:border-transparent">
                   <Text className="text-lg text-gray-300">
                     {menuItem.label}
                   </Text>

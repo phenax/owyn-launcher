@@ -9,12 +9,23 @@ import DraggableFlatList, {
 } from 'react-native-draggable-flatlist';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {AppMenu} from './AppMenu';
+import {useInstalledApps} from '../hooks/useInstalledApps';
 
-export const Favorites: React.FC<{apps: AppDetail[]; active: boolean}> = ({
-  apps,
-  active,
-}) => {
-  const {favoriteAppNames, setFavorites, refreshFavorites} = useFavorites();
+const AppLabel: React.FC<{app: AppDetail}> = React.memo(({app}) => {
+  return (
+    <View className="flex-1">
+      <AppMenu app={app}>
+        <View className="py-3 px-2">
+          <Text className="text-lg">{app.label}</Text>
+        </View>
+      </AppMenu>
+    </View>
+  );
+});
+
+export const Favorites: React.FC<{active: boolean}> = (_) => {
+  const {apps} = useInstalledApps();
+  const {favoriteAppNames, setFavorites} = useFavorites();
 
   const appByName = useMemo(
     () => Object.fromEntries(apps.map((app) => [app.packageName, app])),
@@ -33,40 +44,33 @@ export const Favorites: React.FC<{apps: AppDetail[]; active: boolean}> = ({
     [setFavorites],
   );
 
-  useEffect(() => {
-    if (!active) return;
-    refreshFavorites();
-  }, [active, refreshFavorites]);
-
   return (
     <View className="px-4 py-1">
       <DraggableFlatList
         data={favoriteApps}
         onDragEnd={onDragEnd}
-        keyExtractor={(item) => item.packageName}
+        keyExtractor={(app) => app.packageName}
         renderItem={({item: app, drag, isActive}) => (
-          <ShadowDecorator>
+          <ShadowDecorator key={app.packageName}>
             <OpacityDecorator>
-              <AppMenu app={app}>
-                <View
-                  className={`py-3 px-2 flex-row w-full ${
-                    isActive ? 'bg-gray-950 opacity-60' : ''
-                  }`}>
-                  <Text className="text-lg flex-1">{app.label}</Text>
-                  <TouchableOpacity
-                    onLongPress={drag}
-                    disabled={isActive}
-                    delayLongPress={500}>
-                    <View className="py-1">
-                      <Icon name="drag-indicator" size={21} color="#444" />
-                    </View>
-                  </TouchableOpacity>
-                </View>
-              </AppMenu>
+              <View
+                className={`flex-row justify-stretch items-center ${
+                  isActive ? 'bg-[#181818] opacity-60' : ''
+                }`}>
+                <AppLabel app={app} />
+
+                <TouchableOpacity
+                  onLongPress={drag}
+                  disabled={isActive}
+                  hitSlop={10}
+                  className="p-3">
+                  <Icon name="drag-indicator" size={21} color="#444" />
+                </TouchableOpacity>
+              </View>
             </OpacityDecorator>
           </ShadowDecorator>
         )}
-        renderPlaceholder={() => <View className="flex-1 bg-gray-950" />}
+        renderPlaceholder={() => <View className="flex-1 bg-[#181818]" />}
       />
     </View>
   );

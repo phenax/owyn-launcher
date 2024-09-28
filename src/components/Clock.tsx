@@ -1,7 +1,7 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import {Text, View} from 'react-native';
 
-export const Clock: React.FC = () => {
+export const Clock: React.FC = React.memo(() => {
   const [date, setDate] = useState(() => new Date());
   useEffect(() => {
     const interval = setInterval(() => {
@@ -34,4 +34,4 @@ export const Clock: React.FC = () => {
       <Text className="text-lg">{dateText}</Text>
     </View>
   );
-};
+});

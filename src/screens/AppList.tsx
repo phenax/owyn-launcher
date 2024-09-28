@@ -1,14 +1,24 @@
 import {matchSorter} from 'match-sorter';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {ScrollView, Text, TextInput, View} from 'react-native';
-import {AppDetail} from 'react-native-launcher-kit/typescript/Interfaces/InstalledApps';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {AppMenu} from '../components/AppMenu';
+import {useInstalledApps} from '../hooks/useInstalledApps';
+import {AppDetail} from 'react-native-launcher-kit/typescript/Interfaces/InstalledApps';
 
-export const AppList: React.FC<{apps: AppDetail[]; active: boolean}> = ({
-  apps,
-  active,
-}) => {
+const AppListItem: React.FC<{app: AppDetail}> = React.memo(({app}) => {
+  return (
+    <AppMenu app={app}>
+      <View className="px-4 py-2">
+        <Text className="text-md font-bold">{app.label}</Text>
+        <Text className="text-xs text-gray-600">{app.packageName}</Text>
+      </View>
+    </AppMenu>
+  );
+});
+
+export const AppList: React.FC<{active: boolean}> = React.memo(({active}) => {
+  const {apps} = useInstalledApps();
   const textInputRef = useRef<TextInput>(null);
   const [searchText, setSearchText] = useState('');
 
@@ -41,17 +51,10 @@ export const AppList: React.FC<{apps: AppDetail[]; active: boolean}> = ({
       <ScrollView contentInsetAdjustmentBehavior="automatic">
         <View className="flex-1">
           {filteredApps.map((app, index) => (
-            <AppMenu app={app} key={app.packageName + index}>
-              <View className="mt-4 px-4">
-                <Text className="text-md font-bold dark:text-white">
-                  {app.label}
-                </Text>
-                <Text className="text-xs">{app.packageName}</Text>
-              </View>
-            </AppMenu>
+            <AppListItem app={app} key={app.packageName + index} />
           ))}
         </View>
       </ScrollView>
     </View>
   );
-};
+});

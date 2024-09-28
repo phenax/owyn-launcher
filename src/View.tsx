@@ -1,18 +1,19 @@
-import React, {useState} from 'react';
-import {InstalledApps} from 'react-native-launcher-kit';
+import React, {useEffect, useState} from 'react';
 import Swiper from 'react-native-swiper';
 import {AppList} from './screens/AppList';
 import {Home} from './screens/Home';
+import {useInstalledApps} from './hooks/useInstalledApps';
+import {useFavorites} from './hooks/useFavorites';
 
-export const View: React.FC = () => {
-  const [apps, _setApps] = useState(() => InstalledApps.getSortedApps());
+export const View: React.FC = React.memo(() => {
+  const {refreshApps} = useInstalledApps();
+  const {refreshFavorites} = useFavorites();
   const [screenIndex, setScreenIndex] = useState(0);
 
-  // const refreshApps = () => setApps(InstalledApps.getSortedApps());
-
-  // useEffect(() => {
-  //   refreshApps();
-  // }, [screenIndex]);
+  useEffect(() => {
+    refreshApps();
+    refreshFavorites();
+  }, [screenIndex, refreshApps, refreshFavorites]);
 
   return (
     <Swiper
@@ -22,8 +23,8 @@ export const View: React.FC = () => {
       dot={<></>}
       activeDot={<></>}
       onIndexChanged={setScreenIndex}>
-      <Home apps={apps} active={screenIndex === 0} />
-      <AppList apps={apps} active={screenIndex === 1} />
+      <Home active={screenIndex === 0} />
+      <AppList active={screenIndex === 1} />
     </Swiper>
   );
-};
+});
