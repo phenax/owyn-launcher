@@ -1,10 +1,16 @@
-import {Text, View, Modal, TouchableOpacity, Pressable} from 'react-native';
+import {
+  Text,
+  View,
+  Modal,
+  TouchableOpacity,
+  Pressable,
+  TouchableNativeFeedback,
+} from 'react-native';
 import {AppDetail} from 'react-native-launcher-kit/typescript/Interfaces/InstalledApps';
 import {useFavorites} from '../hooks/useFavorites';
 import React, {useState} from 'react';
 // @ts-expect-error No declaration file
 import IntentLauncher from '@angelkrak/react-native-intent-launcher';
-import {TouchableHighlight} from 'react-native-gesture-handler';
 import {useStableCallback} from '../hooks/useStableCallback';
 
 export const AppMenu: React.FC<React.PropsWithChildren<{app: AppDetail}>> = ({
@@ -57,13 +63,9 @@ export const AppMenu: React.FC<React.PropsWithChildren<{app: AppDetail}>> = ({
 
   return (
     <>
-      <TouchableHighlight
-        activeOpacity={0.7}
-        underlayColor="#101010"
-        onPress={openApp}
-        onLongPress={openContextMenu}>
+      <TouchableNativeFeedback onPress={openApp} onLongPress={openContextMenu}>
         {children}
-      </TouchableHighlight>
+      </TouchableNativeFeedback>
 
       <Modal
         visible={isOpen}
