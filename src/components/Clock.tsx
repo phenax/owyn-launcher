@@ -14,7 +14,7 @@ export const Clock: React.FC = () => {
     const formatter = new Intl.DateTimeFormat('en', {
       hour: 'numeric',
       minute: 'numeric',
-      second: 'numeric',
+      // second: 'numeric',
     });
     return formatter.format(date);
   }, [date]);
@@ -30,7 +30,7 @@ export const Clock: React.FC = () => {
 
   return (
     <View className="p-6">
-      <Text className="text-3xl font-bold">{timeText}</Text>
+      <Text className="text-4xl font-bold">{timeText}</Text>
       <Text className="text-lg">{dateText}</Text>
     </View>
   );

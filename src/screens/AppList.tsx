@@ -2,16 +2,13 @@ import {matchSorter} from 'match-sorter';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {ScrollView, Text, TextInput, View} from 'react-native';
 import {AppDetail} from 'react-native-launcher-kit/typescript/Interfaces/InstalledApps';
-import {useFavorites} from '../hooks/useFavorites';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import {AppMenu} from '../components/AppMenu';
 
-export const AppList: React.FC<{apps: AppDetail[]; isActive: boolean}> = ({
+export const AppList: React.FC<{apps: AppDetail[]; active: boolean}> = ({
   apps,
-  isActive,
+  active,
 }) => {
-  const {addToFavorites} = useFavorites();
-
   const textInputRef = useRef<TextInput>(null);
   const [searchText, setSearchText] = useState('');
 
@@ -24,8 +21,8 @@ export const AppList: React.FC<{apps: AppDetail[]; isActive: boolean}> = ({
   // Autofocus
   useEffect(() => {
     if (!textInputRef.current) return;
-    if (isActive) TextInput.State.focusTextInput(textInputRef.current);
-  }, [isActive]);
+    if (active) TextInput.State.focusTextInput(textInputRef.current);
+  }, [active]);
 
   return (
     <View>
@@ -44,15 +41,14 @@ export const AppList: React.FC<{apps: AppDetail[]; isActive: boolean}> = ({
       <ScrollView contentInsetAdjustmentBehavior="automatic">
         <View className="flex-1">
           {filteredApps.map((app, index) => (
-            <View className="mt-4 px-4" key={app.packageName + index}>
-              <TouchableOpacity
-                onLongPress={() => addToFavorites(app.packageName)}>
+            <AppMenu app={app} key={app.packageName + index}>
+              <View className="mt-4 px-4">
                 <Text className="text-md font-bold dark:text-white">
                   {app.label}
                 </Text>
                 <Text className="text-xs">{app.packageName}</Text>
-              </TouchableOpacity>
-            </View>
+              </View>
+            </AppMenu>
           ))}
         </View>
       </ScrollView>

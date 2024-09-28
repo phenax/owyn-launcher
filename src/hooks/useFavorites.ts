@@ -24,24 +24,34 @@ export const useFavorites = () => {
 
   const setFavorites = useStableCallback(async (names: string[]) => {
     const newNames = [...new Set(names)];
-    setFavoriteAppNames(newNames);
     await favoritesStorage.setItem(JSON.stringify(newNames));
+    refreshFavorites();
   });
 
   const addToFavorites = useStableCallback(async (packageName: string) => {
     const names = await getFavoriteAppNames();
     setFavorites([...names, packageName]);
   });
+  const removeFromFavorites = useStableCallback(async (packageName: string) => {
+    const names = await getFavoriteAppNames();
+    setFavorites(names.filter((name) => name !== packageName));
+  });
+
+  const isFavorite = useStableCallback((packageName: string) =>
+    favoriteAppNames.includes(packageName),
+  );
 
   useEffect(() => {
     refreshFavorites();
   }, [refreshFavorites]);
 
   return {
+    addToFavorites,
     favoriteAppNames,
     getFavoriteAppNames,
-    addToFavorites,
+    isFavorite,
     refreshFavorites,
+    removeFromFavorites,
     setFavorites,
   };
 };
