@@ -1,12 +1,12 @@
 # Owyn launcher
-Owyn (_Only What You Need_) launcher is a minimal launcher for android
+Owyn (_Only What You Need_) launcher is a minimal launcher for android.
 
 
 ## What I need from my launcher...
-* A clock
-* A searchable list of apps
-* Quick access to favorite apps
-* Ability to uninstall apps
+- A clock
+- A searchable list of apps
+- Quick access to favorite apps
+- Ability to uninstall apps
 
 
 ## Screenshots

@@ -10,7 +10,10 @@ const favoriteAppNamesAtom = atomWithStorage<string[]>(
   jsonStorage,
 );
 
-const serialize = (packageNames: string[]) => packageNames.join(',');
+const isSameArray = (a: string[], b: string[]): boolean => {
+  if (a.length !== b.length) return false;
+  return a.every((item, index) => item === b[index]);
+};
 
 export const useFavorites = () => {
   const [favoriteAppNames, setFavoriteAppNames] = useAtom(favoriteAppNamesAtom);
@@ -20,7 +23,7 @@ export const useFavorites = () => {
       updater: (packageNames: string[]) => Promise<string[]> | string[],
     ) => {
       const newNames = [...new Set(await updater(favoriteAppNames))];
-      if (serialize(newNames) === serialize(favoriteAppNames)) return newNames;
+      if (isSameArray(newNames, favoriteAppNames)) return newNames;
 
       setFavoriteAppNames(newNames);
       return newNames;
