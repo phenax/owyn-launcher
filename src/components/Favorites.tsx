@@ -50,6 +50,9 @@ export const Favorites: React.FC<{active: boolean}> = (_) => {
         data={favoriteApps}
         onDragEnd={onDragEnd}
         keyExtractor={(app) => app.packageName}
+        activationDistance={10}
+        scrollEnabled
+        renderPlaceholder={() => <View className="flex-1 bg-[#141414]" />}
         renderItem={({item: app, drag, isActive}) => (
           <ShadowDecorator key={app.packageName}>
             <OpacityDecorator>
@@ -57,20 +60,19 @@ export const Favorites: React.FC<{active: boolean}> = (_) => {
                 className={`flex-row justify-stretch items-center ${
                   isActive ? 'bg-[#181818] opacity-60' : ''
                 }`}>
-                <AppLabel app={app} />
-
                 <TouchableOpacity
                   onLongPress={drag}
                   disabled={isActive}
                   hitSlop={10}
-                  className="p-3">
-                  <Icon name="drag-indicator" size={21} color="#444" />
+                  className="pr-2 py-3">
+                  <Icon name="drag-indicator" size={21} color="#222" />
                 </TouchableOpacity>
+
+                <AppLabel app={app} />
               </View>
             </OpacityDecorator>
           </ShadowDecorator>
         )}
-        renderPlaceholder={() => <View className="flex-1 bg-[#181818]" />}
       />
     </View>
   );
