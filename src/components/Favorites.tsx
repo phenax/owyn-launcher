@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useMemo} from 'react';
+import React, {useCallback, useMemo} from 'react';
 import {Text, TouchableOpacity, View} from 'react-native';
 import {AppDetail} from 'react-native-launcher-kit/typescript/Interfaces/InstalledApps';
 import {useFavorites} from '../hooks/useFavorites';
@@ -39,7 +39,7 @@ export const Favorites: React.FC<{active: boolean}> = (_) => {
 
   const onDragEnd = useCallback(
     ({data}: DragEndParams<AppDetail>) => {
-      setFavorites(data.map((app) => app.packageName));
+      setFavorites(() => data.map((app) => app.packageName));
     },
     [setFavorites],
   );

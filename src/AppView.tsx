@@ -3,17 +3,14 @@ import Swiper from 'react-native-swiper';
 import {AppList} from './screens/AppList';
 import {Home} from './screens/Home';
 import {useInstalledApps} from './hooks/useInstalledApps';
-import {useFavorites} from './hooks/useFavorites';
 
-export const View: React.FC = React.memo(() => {
+export const AppView: React.FC = React.memo(() => {
   const {refreshApps} = useInstalledApps();
-  const {refreshFavorites} = useFavorites();
   const [screenIndex, setScreenIndex] = useState(0);
 
   useEffect(() => {
     refreshApps();
-    refreshFavorites();
-  }, [screenIndex, refreshApps, refreshFavorites]);
+  }, [screenIndex, refreshApps]);
 
   return (
     <Swiper

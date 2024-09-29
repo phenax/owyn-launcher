@@ -63,7 +63,10 @@ export const AppMenu: React.FC<React.PropsWithChildren<{app: AppDetail}>> = ({
 
   return (
     <>
-      <TouchableNativeFeedback onPress={openApp} onLongPress={openContextMenu}>
+      <TouchableNativeFeedback
+        onPress={openApp}
+        onLongPress={openContextMenu}
+        delayPressIn={100}>
         {children}
       </TouchableNativeFeedback>
 
