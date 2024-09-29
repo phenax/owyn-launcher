@@ -1,4 +1,4 @@
-package com.owynlauncherrewrite
+package dev.ediblemonad.owynlauncher
 
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate

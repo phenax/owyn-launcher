@@ -1,4 +1,4 @@
-package com.owynlauncherrewrite
+package dev.ediblemonad.owynlauncher
 
 import android.app.Application
 import com.facebook.react.PackageList

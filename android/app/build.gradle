@@ -71,14 +71,18 @@ def enableProguardInReleaseBuilds = true
  */
 def jscFlavor = 'org.webkit:android-jsc:+'
 
+// Local properties
+def Properties localProperties = new Properties()
+localProperties.load(project.rootProject.file("local.properties").newDataInputStream())
+
 android {
     ndkVersion rootProject.ext.ndkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace "com.owynlauncherrewrite"
+    namespace "dev.ediblemonad.owynlauncher"
     defaultConfig {
-        applicationId "com.owynlauncherrewrite"
+        applicationId "dev.ediblemonad.owynlauncher"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
@@ -91,7 +95,14 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
+        release {
+            storeFile file("release.keystore")
+            storePassword localProperties.getProperty('OWYN_STORE_PASS')
+            keyAlias 'releasekey'
+            keyPassword localProperties.getProperty('OWYN_KEY_PASS')
+       }
     }
+
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
@@ -99,9 +110,18 @@ android {
         release {
             // Caution! In production, you need to generate your own keystore file.
             // see https://reactnative.dev/docs/signed-apk-android.
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+        }
+    }
+
+    splits {
+        abi {
+            reset()
+            enable true
+            universalApk true
+            include "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
         }
     }
 }

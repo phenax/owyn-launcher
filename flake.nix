@@ -27,19 +27,19 @@
           cmakeVersions = [ "3.22.1" ];
         };
       in pkgs.mkShell rec {
-        buildInputs = with pkgs; [
-          bun
-          nodePackages."@tailwindcss/language-server"
-          nodePackages.typescript
-          nodePackages.typescript-language-server
+        buildInputs = [
+          pkgs.bun
+          pkgs.nodePackages."@tailwindcss/language-server"
+          pkgs.nodePackages.typescript
+          pkgs.nodePackages.typescript-language-server
 
           androidComposition.androidsdk
           androidComposition.platform-tools
           jdk
 
-          just
+          pkgs.just
 
-          libxml2
+          pkgs.libxml2
         ];
         nativeBuildInputs = with pkgs; [ clang ];
 
