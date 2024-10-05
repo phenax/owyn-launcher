@@ -78,6 +78,10 @@ export const AppMenu: React.FC<React.PropsWithChildren<{app: AppDetail}>> = ({
         <TouchableOpacity className="flex-1" onPress={closeContextMenu}>
           <View className="flex justify-center items-center h-full">
             <View className="bg-[#181818] border border-[#222] w-2/3">
+              <Text className="text-slate-500 text-xs text-center border-b border-slate-500">
+                {app.label}
+              </Text>
+
               {menuItems.map((menuItem) => (
                 <Pressable
                   key={menuItem.label}
