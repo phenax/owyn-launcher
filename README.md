@@ -12,7 +12,7 @@ Owyn (_Only What You Need_) launcher is a minimal launcher for android.
 ## Screenshots
 | Home | App list |
 |------|----------|
-| ![Screenshots](media/screenshot-home.png) | ![Screenshots](media/screenshot-apps.png) |
+| ![Home](media/screenshot-home.png) | ![App list](media/screenshot-applist.png) |
 
 
 ## Install
