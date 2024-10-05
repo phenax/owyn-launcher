@@ -1,17 +1,11 @@
-import {
-  Text,
-  View,
-  Modal,
-  TouchableOpacity,
-  Pressable,
-  TouchableNativeFeedback,
-} from 'react-native';
+import {Text, View, Modal, TouchableOpacity, Pressable} from 'react-native';
 import {AppDetail} from 'react-native-launcher-kit/typescript/Interfaces/InstalledApps';
 import {useFavorites} from '../hooks/useFavorites';
 import React, {useState} from 'react';
 // @ts-expect-error No declaration file
 import IntentLauncher from '@angelkrak/react-native-intent-launcher';
 import {useStableCallback} from '../hooks/useStableCallback';
+import {TouchableNativeFeedback} from 'react-native-gesture-handler';
 
 export const AppMenu: React.FC<React.PropsWithChildren<{app: AppDetail}>> = ({
   app,
@@ -63,19 +57,16 @@ export const AppMenu: React.FC<React.PropsWithChildren<{app: AppDetail}>> = ({
 
   return (
     <>
-      <TouchableNativeFeedback
-        onPress={openApp}
-        onLongPress={openContextMenu}
-        delayPressIn={100}>
+      <TouchableNativeFeedback onPress={openApp} onLongPress={openContextMenu}>
         {children}
       </TouchableNativeFeedback>
 
       <Modal
         visible={isOpen}
         transparent={true}
-        animationType="none"
+        animationType="fade"
         onRequestClose={closeContextMenu}>
-        <TouchableOpacity className="flex-1" onPress={closeContextMenu}>
+        <Pressable className="flex-1" onPress={closeContextMenu}>
           <View className="flex justify-center items-center h-full">
             <View className="bg-[#181818] border border-[#222] w-2/3">
               <Text className="text-slate-500 text-xs text-center border-b border-slate-500">
@@ -83,18 +74,18 @@ export const AppMenu: React.FC<React.PropsWithChildren<{app: AppDetail}>> = ({
               </Text>
 
               {menuItems.map((menuItem) => (
-                <Pressable
+                <TouchableOpacity
                   key={menuItem.label}
                   onPress={menuItem.onPress}
                   className="py-3 px-4 border-b border-[#222] last:border-b-0 last:border-transparent">
                   <Text className="text-lg text-gray-300">
                     {menuItem.label}
                   </Text>
-                </Pressable>
+                </TouchableOpacity>
               ))}
             </View>
           </View>
-        </TouchableOpacity>
+        </Pressable>
       </Modal>
     </>
   );
