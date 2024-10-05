@@ -65,7 +65,7 @@ export const Favorites: React.FC<{active: boolean}> = (_) => {
                   disabled={isActive}
                   hitSlop={10}
                   className="pr-2 py-3">
-                  <Icon name="drag-indicator" size={21} color="#222" />
+                  <Icon name="drag-indicator" size={21} color="#333" />
                 </TouchableOpacity>
 
                 <AppLabel app={app} />
